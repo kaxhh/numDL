@@ -14,12 +14,12 @@ menu "Data"
 
 endmenu
 
-source "$SDK_ROOT/sdk/common/Kconfig"
+source "$OS_ROOT/thirdparty/matrixCpp/common/Kconfig"
 
-source "$SDK_ROOT/sdk/feature/Kconfig"
+source "$OS_ROOT/thirdparty/matrixCpp/feature/Kconfig"
 
-source "$SDK_ROOT/sdk/library/Kconfig"
+source "$OS_ROOT/thirdparty/matrixCpp/library/Kconfig"
 
-source "$SDK_ROOT/sdk/test/Kconfig"
+source "$OS_ROOT/thirdparty/matrixCpp/test/Kconfig"
 
 endmenu

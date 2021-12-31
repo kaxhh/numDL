@@ -9,7 +9,7 @@ config UAI_LIB_USING_KISSFFT
     default n
 
 if UAI_LIB_USING_CMSIS
-    source "$SDK_ROOT/sdk/library/CMSIS/Kconfig"
+    source "$OS_ROOT/thirdparty/matrixCpp/library/CMSIS/Kconfig"
 endif
 
 endmenu
