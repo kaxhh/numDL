@@ -1,0 +1,476 @@
+menu "CMSIS DSP Table Configuration"
+
+config UAI_CMSIS_DSP_CONFIG_TABLES_ALL_FAST
+    bool "Enable all All Interpolation Tables"
+    default y
+    depends on UAI_CMSIS_DSP_USING_CONTROLLER || UAI_CMSIS_DSP_USING_FILTERING || UAI_CMSIS_DSP_USING_FAST_MATH
+
+config UAI_CMSIS_DSP_CONFIG_TABLES_ALL_FFT
+    bool "Enable all All FFT Tables"
+    default y
+    depends on UAI_CMSIS_DSP_USING_TRANSFORM
+
+if UAI_CMSIS_DSP_USING_FAST_MATH
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_ARM_COS_F32
+        bool "Enable COS F32 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_ARM_COS_Q31
+        bool "Enable COS Q31 Table"
+        default n
+    
+    config UAI_CMSIS_DSP_CONFIG_TABLES_ARM_COS_Q15
+        bool "Enable COS Q15 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_ARM_SIN_F32
+        bool "Enable SIN F32 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_ARM_SIN_Q31
+        bool "Enable SIN Q31 Table"
+        default n
+    
+    config UAI_CMSIS_DSP_CONFIG_TABLES_ARM_SIN_Q15
+        bool "Enable SIN Q15 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_ARM_SIN_COS_F32
+        bool "Enable SIN COS F32 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_ARM_SIN_COS_Q31
+        bool "Enable SIN COS Q31 Table"
+        default n
+
+endif
+
+if UAI_CMSIS_DSP_USING_FILTERING
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_ARM_LMS_NORM_Q31
+        bool "Enable LMS NORM Q31 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_ARM_LMS_NORM_Q15
+        bool "Enable LMS NORM Q15 Table"
+        default n
+
+endif
+
+if UAI_CMSIS_DSP_USING_TRANSFORM
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_F64_16
+        bool "Enable CFFT F64 16 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_F64_32
+        bool "Enable CFFT F64 32 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_F64_64
+        bool "Enable CFFT F64 64 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_F64_128
+        bool "Enable CFFT F64 128 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_F64_256
+        bool "Enable CFFT F64 256 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_F64_512
+        bool "Enable CFFT F64 512 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_F64_1024
+        bool "Enable CFFT F64 1024 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_F64_2048
+        bool "Enable CFFT F64 2048 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_F64_4096
+        bool "Enable CFFT F64 4096 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_F32_16
+        bool "Enable CFFT F32 16 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_F32_32
+        bool "Enable CFFT F32 32 Table"
+        default n 
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_F32_64
+        bool "Enable CFFT F32 64 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_F32_128
+        bool "Enable CFFT F32 128 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_F32_256
+        bool "Enable CFFT F32 256 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_F32_512
+        bool "Enable CFFT F32 512 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_F32_1024
+        bool "Enable CFFT F32 1024 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_F32_2048
+        bool "Enable CFFT F32 2048 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_F32_4096
+        bool "Enable CFFT F32 4096 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_Q31_16
+        bool "Enable CFFT Q31 16 Table"
+        default n 
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_Q31_32
+        bool "Enable CFFT Q31 32 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_Q31_64
+        bool "Enable CFFT Q31 64 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_Q31_128
+        bool "Enable CFFT Q31 128 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_Q31_256
+        bool "Enable CFFT Q31 256 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_Q31_512
+        bool "Enable CFFT Q31 512 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_Q31_1024
+        bool "Enable CFFT Q31 1024 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_Q31_2048
+        bool "Enable CFFT Q31 2048 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_Q31_4096
+        bool "Enable CFFT Q31 4096 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_Q15_16
+        bool "Enable CFFT Q15 16 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_Q15_32
+        bool "Enable CFFT Q15 32 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_Q15_64
+        bool "Enable CFFT Q15 64 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_Q15_128
+        bool "Enable CFFT Q15 128 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_Q15_256
+        bool "Enable CFFT Q15 256 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_Q15_512
+        bool "Enable CFFT Q15 512 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_Q15_1024
+        bool "Enable CFFT Q15 1024 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_Q15_2048
+        bool "Enable CFFT Q15 2048 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_Q15_4096
+        bool "Enable CFFT Q15 4096 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_FAST_F32_32
+        bool "Enable RFFT FAST F32 32 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_FAST_F32_64
+        bool "Enable RFFT FAST F32 64 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_FAST_F32_128
+        bool "Enable RFFT FAST F32 128 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_FAST_F32_256
+        bool "Enable RFFT FAST F32 256 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_FAST_F32_512
+        bool "Enable RFFT FAST F32 512 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_FAST_F32_1024
+        bool "Enable RFFT FAST F32 1024 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_FAST_F32_2048
+        bool "Enable RFFT FAST F32 2048 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_FAST_F32_4096
+        bool "Enable RFFT FAST F32 4096 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_F32_128
+        bool "Enable RFFT F32 128 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_F32_512
+        bool "Enable RFFT F32 512 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_F32_2048
+        bool "Enable RFFT F32 2048 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_F32_8192
+        bool "Enable RFFT F32 8192 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_FAST_F64_32
+        bool "Enable RFFT FAST F64 32 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_FAST_F64_64
+        bool "Enable RFFT FAST F64 64 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_FAST_F64_128
+        bool "Enable RFFT FAST F64 128 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_FAST_F64_256
+        bool "Enable RFFT FAST F64 256 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_FAST_F64_512
+        bool "Enable RFFT FAST F64 512 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_FAST_F64_1024
+        bool "Enable RFFT FAST F64 1024 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_FAST_F64_2048
+        bool "Enable RFFT FAST F64 2048 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_FAST_F64_4096
+        bool "Enable RFFT FAST F64 4096 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_F64_128
+        bool "Enable RFFT F64 128 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_F64_512
+        bool "Enable RFFT F64 512 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_F64_2048
+        bool "Enable RFFT F64 2048 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_F64_8192
+        bool "Enable RFFT F64 8192 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_FAST_F16_32
+        bool "Enable RFFT FAST F16 32 Table"
+        default n
+
+    if UAI_CMSIS_DSP_ARM_FLOAT16_SUPPORTED
+
+        config UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_FAST_F16_64
+            bool "Enable RFFT FAST F16 64 Table"
+            default n
+        
+        config UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_FAST_F16_128
+            bool "Enable RFFT FAST F16 128 Table"
+            default n
+        
+        config UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_FAST_F16_256
+            bool "Enable RFFT FAST F16 256 Table"
+            default n
+        
+        config UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_FAST_F16_512
+            bool "Enable RFFT FAST F16 512 Table"
+            default n
+
+        config UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_FAST_F16_1024
+            bool "Enable RFFT FAST F16 1024 Table"
+            default n
+
+        config UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_FAST_F16_2048
+            bool "Enable RFFT FAST F16 2048 Table"
+            default n
+
+        config UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_FAST_F16_4096
+            bool "Enable RFFT FAST F16 4096 Table"
+            default n
+
+    endif
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_Q31_32
+        bool "Enable RFFT Q31 32 Table"
+        default n
+    
+    config UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_Q31_64
+        bool "Enable RFFT Q31 64 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_Q31_128
+        bool "Enable RFFT Q31 128 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_Q31_256
+        bool "Enable RFFT Q31 256 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_Q31_512
+        bool "Enable RFFT Q31 512 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_Q31_1024
+        bool "Enable RFFT Q31 1024 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_Q31_2048
+        bool "Enable RFFT Q31 2048 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_Q31_4096
+        bool "Enable RFFT Q31 4096 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_Q31_8192
+        bool "Enable RFFT Q31 8192 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_Q15_32
+        bool "Enable RFFT Q15 32 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_Q15_64
+        bool "Enable RFFT Q15 64 Table"
+        default n
+    
+    config UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_Q15_128
+        bool "Enable RFFT Q15 128 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_Q15_256
+        bool "Enable RFFT Q15 256 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_Q15_512
+        bool "Enable RFFT Q15 512 Table"
+        default n
+    
+    config UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_Q15_1024
+        bool "Enable RFFT Q15 1024 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_Q15_2048
+        bool "Enable RFFT Q15 2048 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_Q15_4096
+        bool "Enable RFFT Q15 4096 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_Q15_8192
+        bool "Enable RFFT Q15 8192 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_DCT4_F32_128
+        bool "Enable DCT4 F32 128 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_DCT4_F32_512
+        bool "Enable DCT4 F32 512 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_DCT4_F32_2048
+        bool "Enable DCT4 F32 2048 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_DCT4_F32_8192
+        bool "Enable DCT4 F32 8192 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_DCT4_Q31_128
+        bool "Enable DCT4 Q31 128 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_DCT4_Q31_512
+        bool "Enable DCT4 Q31 512 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_DCT4_Q31_2048
+        bool "Enable DCT4 Q31 2048 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_DCT4_Q31_8192
+        bool "Enable DCT4 Q31 8192 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_DCT4_Q15_128
+        bool "Enable DCT4 Q15 128 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_DCT4_Q15_512
+        bool "Enable DCT4 Q15 512 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_DCT4_Q15_2048
+        bool "Enable DCT4 Q15 2048 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_DCT4_Q15_8192
+        bool "Enable DCT4 Q15 8192 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_ARM_CFFT_RADIX2_Q15
+        bool "Enable ARM CFFT RADIX2 Q15 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_ARM_CFFT_RADIX4_Q15
+        bool "Enable ARM CFFT RADIX4 Q15 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_ARM_CFFT_RADIX2_Q31
+        bool "Enable ARM CFFT RADIX2 Q31 Table"
+        default n
+
+    config UAI_CMSIS_DSP_CONFIG_TABLES_ARM_CFFT_RADIX4_Q31
+        bool "Enable ARM CFFT RADIX4 Q31 Table"
+        default n
+endif
+
+endmenu

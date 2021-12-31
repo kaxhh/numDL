@@ -1,0 +1,15 @@
+from build_tools import *
+
+group = []
+
+if not IsDefined(['UAI_LIB_USING_KISSFFT']):
+    Return('group')
+
+pwd = PresentDir()
+
+path = [pwd]
+src = Glob('*.c')
+
+group = AddCodeGroup('kissfft', src, depend = ['UAI_LIB_USING_KISSFFT'], CPPPATH = path)
+
+Return('group')

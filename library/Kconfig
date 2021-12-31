@@ -1,0 +1,15 @@
+menu "Library"
+
+config UAI_LIB_USING_CMSIS
+    bool "Enable CMSIS Software Library" 
+    default n
+
+config UAI_LIB_USING_KISSFFT
+    bool "Enable Kissfft Software Library"
+    default n
+
+if UAI_LIB_USING_CMSIS
+    source "$SDK_ROOT/sdk/library/CMSIS/Kconfig"
+endif
+
+endmenu

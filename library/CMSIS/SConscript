@@ -1,0 +1,661 @@
+# For UltraAI SDK Compiling
+import os
+from build_tools import *
+
+groups = []
+pwd = PresentDir()
+
+if not IsDefined(['UAI_LIB_USING_CMSIS']):
+    Return('groups')
+
+# For CMSIS-Core
+if IsDefined(['UAI_CMSIS_USING_CORE']):
+    path = [pwd + '/Core/Include/']
+    src = []
+
+    groups += AddCodeGroup('cmsis/core', src,
+                           depend=['UAI_CMSIS_USING_CORE'], CPPPATH=path)
+
+# For CMSIS-DSP
+if IsDefined(['UAI_CMSIS_USING_DSP']):
+    path = [pwd + '/DSP/Include/']
+    path += [pwd + '/DSP/Privateinclude']
+    src = []
+    defines = []
+
+    # Definitions for MATH
+    if IsDefined('ARCH_ARM_CORTEX_M7'):
+        defines += ['ARM_MATH_CM7']
+    elif IsDefined('ARCH_ARM_CORTEX_M4'):
+        defines += ['ARM_MATH_CM4']
+    elif IsDefined('ARCH_ARM_CORTEX_M3'):
+        defines += ['ARM_MATH_CM3']
+    elif IsDefined('ARCH_ARM_CORTEX_M4'):
+        defines += ['ARM_MATH_CM4']
+    elif IsDefined('ARCH_ARM_CORTEX_M0'):
+        defines += ['ARM_MATH_CM0']
+
+    # Basic math function
+    if IsDefined(['UAI_CMSIS_DSP_USING_BASIC_MATH']):
+        src += Glob('DSP/Source/BasicMathFunctions/BasicMathFunctions.c')
+
+        if IsDefined(['UAI_CMSIS_DSP_ARM_FLOAT16_SUPPORTED']):
+            src += Glob('DSP/Source/BasicMathFunctions/BasicMathFunctionsF16.c')
+
+    # Bayes function
+    if IsDefined(['UAI_CMSIS_DSP_USING_BAYES']):
+        src += Glob('DSP/Source/BayesFunctions/BayesFunctions.c')
+
+        if IsDefined(['UAI_CMSIS_DSP_ARM_FLOAT16_SUPPORTED']):
+            src += Glob('DSP/Source/BayesFunctions/BayesFunctionsF16.c')
+
+    if IsDefined(['UAI_CMSIS_DSP_USING_COMPLEX_MATH']):
+        src += Glob('DSP/Source/ComplexMathFunctions/ComplexMathFunctions.c')
+        if IsDefined(['UAI_CMSIS_DSP_ARM_FLOAT16_SUPPORTED']):
+            src += Glob('DSP/Source/ComplexMathFunctions/ComplexMathFunctionsF16.c')
+
+    if IsDefined(['UAI_CMSIS_DSP_USING_CONTROLLER']):
+        src += Glob('DSP/Source/ControllerFunctions/ControllerFunctions.c')
+
+    if IsDefined(['UAI_CMSIS_DSP_USING_DISTANCE']):
+        src += Glob('DSP/Source/DistanceFunctions/DistanceFunctions.c')
+
+        if IsDefined(['UAI_CMSIS_DSP_ARM_FLOAT16_SUPPORTED']):
+            src += Glob('DSP/Source/DistanceFunctions/DistanceFunctionsF16.c')
+
+    if IsDefined(['UAI_CMSIS_DSP_USING_FAST_MATH']):
+        src += Glob('DSP/Source/FastMathFunctions/FastMathFunctions.c')
+        if IsDefined(['UAI_CMSIS_DSP_ARM_FLOAT16_SUPPORTED']):
+            src += Glob('DSP/Source/FastMathFunctions/FastMathFunctionsF16.c')
+
+    if IsDefined(['UAI_CMSIS_DSP_USING_FILTERING']):
+        src += Glob('DSP/Source/FilteringFunctions/FilteringFunctions.c')
+
+        if IsDefined(['UAI_CMSIS_DSP_ARM_FLOAT16_SUPPORTED']):
+            src += Glob('DSP/Source/FilteringFunctions/FilteringFunctionsF16.c')
+
+    if IsDefined(['UAI_CMSIS_DSP_USING_INTERPOLATION']):
+        src += Glob('DSP/Source/InterpolationFunctions/InterpolationFunctions.c')
+
+        if IsDefined(['UAI_CMSIS_DSP_ARM_FLOAT16_SUPPORTED']):
+            src += Glob('DSP/Source/InterpolationFunctions/InterpolationFunctionsF16.c')
+
+    if IsDefined(['UAI_CMSIS_DSP_USING_MATRIX']):
+        src += Glob('DSP/Source/MatrixFunctions/MatrixFunctions.c')
+
+        if IsDefined(['UAI_CMSIS_DSP_ARM_FLOAT16_SUPPORTED']):
+            src += Glob('DSP/Source/MatrixFunctions/MatrixFunctionsF16.c')
+
+    if IsDefined(['UAI_CMSIS_DSP_USING_QUATERNION_MATH']):
+        src += Glob('DSP/Source/QuaternionMathFunctions/QuaternionMathFunctions.c')
+
+    if IsDefined(['UAI_CMSIS_DSP_USING_STATISTICS']):
+        src += Glob('DSP/Source/StatisticsFunctions/StatisticsFunctions.c')
+
+        if IsDefined(['UAI_CMSIS_DSP_ARM_FLOAT16_SUPPORTED']):
+            src += Glob('DSP/Source/StatisticsFunctions/StatisticsFunctionsF16.c')
+
+    if IsDefined(['UAI_CMSIS_DSP_USING_SUPPORT']):
+        src += Glob('DSP/Source/SupportFunctions/SupportFunctions.c')
+
+        if IsDefined(['UAI_CMSIS_DSP_ARM_FLOAT16_SUPPORTED']):
+            src += Glob('DSP/Source/SupportFunctions/SupportFunctionsF16.c')
+
+    if IsDefined(['UAI_CMSIS_DSP_USING_SVM']):
+        src += Glob('DSP/Source/SVMFunctions/SVMFunctions.c')
+
+        if IsDefined(['UAI_CMSIS_DSP_ARM_FLOAT16_SUPPORTED']):
+            src += Glob('DSP/Source/SVMFunctions/SVMFunctionsF16.c')
+
+    if IsDefined(['UAI_CMSIS_DSP_USING_TRANSFORM']):
+        src += Glob('DSP/Source/TransformFunctions/TransformFunctions.c')
+
+        if IsDefined(['UAI_CMSIS_DSP_ARM_FLOAT16_SUPPORTED']):
+            src += Glob('DSP/Source/TransformFunctions/TransformFunctionsF16.c')
+
+    if IsDefined(['UAI_CMSIS_DSP_USING_COMMON_TABLES']):
+        src += Glob('DSP/Source/CommonTables/CommonTables.c')
+
+        if IsDefined(['UAI_CMSIS_DSP_ARM_FLOAT16_SUPPORTED']):
+            src += Glob('DSP/Source/CommonTables/CommonTablesF16.c')
+
+        if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES']):
+            defines += ['ARM_DSP_CONFIG_TABLES']
+
+            if IsDefined(['UAI_CMSIS_DSP_USING_TRANSFORM']):
+                defines += ['ARM_FFT_ALLOW_TABLES']
+
+            if IsDefined(['UAI_CMSIS_DSP_USING_FILTERING',
+                          'UAI_CMSIS_DSP_USING_CONTROLLER',
+                          'UAI_CMSIS_DSP_USING_FAST_MATH']):
+                defines += ['ARM_FAST_ALLOW_TABLES']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_ALL_FAST']):
+                defines += ['ARM_ALL_FAST_TABLES']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_ALL_FFT']):
+                defines += ['ARM_ALL_FFT_TABLES']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_ARM_COS_F32',
+                          'UAI_CMSIS_DSP_CONFIG_TABLES_ARM_SIN_F32',
+                          'UAI_CMSIS_DSP_CONFIG_TABLES_ARM_SIN_COS_F32']):
+                defines += ['ARM_TABLE_SIN_F32']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_ARM_COS_Q31',
+                          'UAI_CMSIS_DSP_CONFIG_TABLES_ARM_SIN_Q31',
+                          'UAI_CMSIS_DSP_CONFIG_TABLES_ARM_SIN_COS_Q31']):
+                defines += ['ARM_TABLE_SIN_Q31']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_ARM_COS_Q15',
+                          'UAI_CMSIS_DSP_CONFIG_TABLES_ARM_SIN_Q15',
+                          'UAI_CMSIS_DSP_CONFIG_TABLES_ARM_SIN_COS_Q15']):
+                defines += ['ARM_TABLE_SIN_Q15']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_ARM_LMS_NORM_Q31']):
+                defines += ['ARM_TABLE_RECIP_Q31']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_ARM_LMS_NORM_Q15']):
+                defines += ['ARM_TABLE_RECIP_Q15']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_F32_16']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_F32_16']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_F32_32']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_F32_32']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_F32_64']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_F32_64']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_F32_128']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_F32_128']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_F32_256']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_F32_256']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_F32_512']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_F32_512']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_F32_1024']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_F32_1024']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_F32_2048']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_F32_2048']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_F32_4096']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_F32_4096']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_F16_16']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_F16_16']
+                defines += ['ARM_TABLE_BITREVIDX_FLT_16']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_16']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_F16_32']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_F16_32']
+                defines += ['ARM_TABLE_BITREVIDX_FLT_32']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_32']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_F16_64']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_F16_64']
+                defines += ['ARM_TABLE_BITREVIDX_FLT_64']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_64']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_F16_128']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_F16_128']
+                defines += ['ARM_TABLE_BITREVIDX_FLT_128']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_128']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_F16_256']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_F16_256']
+                defines += ['ARM_TABLE_BITREVIDX_FLT_256']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_256']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_F16_512']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_F16_512']
+                defines += ['ARM_TABLE_BITREVIDX_FLT_512']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_512']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_F16_1024']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_F16_1024']
+                defines += ['ARM_TABLE_BITREVIDX_FLT_1024']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_1024']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_F16_2048']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_F16_2048']
+                defines += ['ARM_TABLE_BITREVIDX_FLT_2048']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_2048']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_F16_4096']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_F16_4096']
+                defines += ['ARM_TABLE_BITREVIDX_FLT_4096']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_4096']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_F64_16']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_F64_16']
+                defines += ['ARM_TABLE_BITREVIDX_FLT64_16']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_F64_32']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_F64_32']
+                defines += ['ARM_TABLE_BITREVIDX_FLT64_32']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_F64_64']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_F64_64']
+                defines += ['ARM_TABLE_BITREVIDX_FLT64_64']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_F64_128']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_F64_128']
+                defines += ['ARM_TABLE_BITREVIDX_FLT64_128']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_F64_256']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_F64_256']
+                defines += ['ARM_TABLE_BITREVIDX_FLT64_256']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_F64_512']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_F64_512']
+                defines += ['ARM_TABLE_BITREVIDX_FLT64_512']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_F64_1024']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_F64_1024']
+                defines += ['ARM_TABLE_BITREVIDX_FLT64_1024']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_F64_2048']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_F64_2048']
+                defines += ['ARM_TABLE_BITREVIDX_FLT64_2048']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_F64_4096']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_F64_4096']
+                defines += ['ARM_TABLE_BITREVIDX_FLT64_4096']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_Q31_16']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_Q31_16']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_16']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_Q31_32']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_Q31_32']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_32']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_Q31_64']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_Q31_64']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_64']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_Q31_128']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_Q31_128']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_128']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_Q31_256']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_Q31_256']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_256']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_Q31_512']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_Q31_512']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_512']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_Q31_1024']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_Q31_1024']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_1024']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_Q31_2048']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_Q31_2048']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_2048']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_Q31_4096']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_Q31_4096']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_4096']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_Q15_16']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_Q15_16']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_16']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_Q15_32']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_Q15_32']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_32']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_Q15_64']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_Q15_64']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_64']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_Q15_128']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_Q15_128']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_128']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_Q15_256']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_Q15_256']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_256']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_Q15_512']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_Q15_512']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_512']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_Q15_1024']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_Q15_1024']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_1024']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_Q15_2048']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_Q15_2048']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_2048']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_CFFT_Q15_4096']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_Q15_4096']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_4096']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_FAST_F64_32']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_F64_16']
+                defines += ['ARM_TABLE_BITREVIDX_FLT64_16']
+                defines += ['ARM_TABLE_TWIDDLECOEF_RFFT_F64_32']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_FAST_F64_64']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_F64_32']
+                defines += ['ARM_TABLE_BITREVIDX_FLT64_32']
+                defines += ['ARM_TABLE_TWIDDLECOEF_RFFT_F64_64']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_FAST_F64_128']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_F64_64']
+                defines += ['ARM_TABLE_BITREVIDX_FLT64_64']
+                defines += ['ARM_TABLE_TWIDDLECOEF_RFFT_F64_128']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_FAST_F64_256']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_F64_128']
+                defines += ['ARM_TABLE_BITREVIDX_FLT64_128']
+                defines += ['ARM_TABLE_TWIDDLECOEF_RFFT_F64_256']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_FAST_F64_512']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_F64_256']
+                defines += ['ARM_TABLE_BITREVIDX_FLT64_256']
+                defines += ['ARM_TABLE_TWIDDLECOEF_RFFT_F64_512']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_FAST_F64_1024']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_F64_512']
+                defines += ['ARM_TABLE_BITREVIDX_FLT64_512']
+                defines += ['ARM_TABLE_TWIDDLECOEF_RFFT_F64_1024']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_FAST_F64_2048']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_F64_1024']
+                defines += ['ARM_TABLE_BITREVIDX_FLT64_1024']
+                defines += ['ARM_TABLE_TWIDDLECOEF_RFFT_F64_2048']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_FAST_F32_32']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_F32_16']
+                defines += ['ARM_TABLE_BITREVIDX_FLT_16']
+                defines += ['ARM_TABLE_TWIDDLECOEF_RFFT_F32_32']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_FAST_F32_64']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_F32_32']
+                defines += ['ARM_TABLE_BITREVIDX_FLT_32']
+                defines += ['ARM_TABLE_TWIDDLECOEF_RFFT_F32_64']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_FAST_F32_128']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_F32_64']
+                defines += ['ARM_TABLE_BITREVIDX_FLT_64']
+                defines += ['ARM_TABLE_TWIDDLECOEF_RFFT_F32_128']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_FAST_F32_256']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_F32_128']
+                defines += ['ARM_TABLE_BITREVIDX_FLT_128']
+                defines += ['ARM_TABLE_TWIDDLECOEF_RFFT_F32_256']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_FAST_F32_512']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_F32_256']
+                defines += ['ARM_TABLE_BITREVIDX_FLT_256']
+                defines += ['ARM_TABLE_TWIDDLECOEF_RFFT_F32_512']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_FAST_F32_1024']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_F32_512']
+                defines += ['ARM_TABLE_BITREVIDX_FLT_512']
+                defines += ['ARM_TABLE_TWIDDLECOEF_RFFT_F32_1024']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_FAST_F32_2048']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_F32_1024']
+                defines += ['ARM_TABLE_BITREVIDX_FLT_1024']
+                defines += ['ARM_TABLE_TWIDDLECOEF_RFFT_F32_2048']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_FAST_F32_4096']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_F32_2048']
+                defines += ['ARM_TABLE_BITREVIDX_FLT_2048']
+                defines += ['ARM_TABLE_TWIDDLECOEF_RFFT_F32_4096']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_FAST_F16_32']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_F16_16']
+                defines += ['ARM_TABLE_BITREVIDX_FLT_16']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_16']
+                defines += ['ARM_TABLE_TWIDDLECOEF_RFFT_F16_32']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_FAST_F16_64']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_F16_32']
+                defines += ['ARM_TABLE_BITREVIDX_FLT_32']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_32']
+                defines += ['ARM_TABLE_TWIDDLECOEF_RFFT_F16_64']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_FAST_F16_128']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_F16_64']
+                defines += ['ARM_TABLE_BITREVIDX_FLT_64']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_64']
+                defines += ['ARM_TABLE_TWIDDLECOEF_RFFT_F16_128']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_FAST_F16_256']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_F16_128']
+                defines += ['ARM_TABLE_BITREVIDX_FLT_128']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_128']
+                defines += ['ARM_TABLE_TWIDDLECOEF_RFFT_F16_256']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_FAST_F16_512']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_F16_256']
+                defines += ['ARM_TABLE_BITREVIDX_FLT_256']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_256']
+                defines += ['ARM_TABLE_TWIDDLECOEF_RFFT_F16_512']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_FAST_F16_1024']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_F16_512']
+                defines += ['ARM_TABLE_BITREVIDX_FLT_512']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_512']
+                defines += ['ARM_TABLE_TWIDDLECOEF_RFFT_F16_1024']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_FAST_F16_2048']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_F16_1024']
+                defines += ['ARM_TABLE_BITREVIDX_FLT_1024']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_1024']
+                defines += ['ARM_TABLE_TWIDDLECOEF_RFFT_F16_2048']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_FAST_F16_4096']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_F16_2048']
+                defines += ['ARM_TABLE_BITREVIDX_FLT_2048']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_2048']
+                defines += ['ARM_TABLE_TWIDDLECOEF_RFFT_F16_4096']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_F32_128',
+                          'UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_F32_512',
+                          'UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_F32_2048',
+                          'UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_F32_8192']):
+                defines += ['ARM_TABLE_REALCOEF_F32']
+                defines += ['ARM_TABLE_BITREV_1024']
+                defines += ['ARM_TABLE_TWIDDLECOEF_F32_4096']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_Q31_32']):
+                defines += ['ARM_TABLE_REALCOEF_Q31']
+                defines += ['ARM_TABLE_TWIDDLECOEF_Q31_16']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_16']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_Q31_64']):
+                defines += ['ARM_TABLE_REALCOEF_Q31']
+                defines += ['ARM_TABLE_TWIDDLECOEF_Q31_32']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_32']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_Q31_128']):
+                defines += ['ARM_TABLE_REALCOEF_Q31']
+                defines += ['ARM_TABLE_TWIDDLECOEF_Q31_64']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_64']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_Q31_256']):
+                defines += ['ARM_TABLE_REALCOEF_Q31']
+                defines += ['ARM_TABLE_TWIDDLECOEF_Q31_128']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_128']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_Q31_512']):
+                defines += ['ARM_TABLE_REALCOEF_Q31']
+                defines += ['ARM_TABLE_TWIDDLECOEF_Q31_256']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_256']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_Q31_1024']):
+                defines += ['ARM_TABLE_REALCOEF_Q31']
+                defines += ['ARM_TABLE_TWIDDLECOEF_Q31_512']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_512']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_Q31_2048']):
+                defines += ['ARM_TABLE_REALCOEF_Q31']
+                defines += ['ARM_TABLE_TWIDDLECOEF_Q31_1024']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_1024']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_Q31_4096']):
+                defines += ['ARM_TABLE_REALCOEF_Q31']
+                defines += ['ARM_TABLE_TWIDDLECOEF_Q31_2048']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_2048']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_Q31_8192']):
+                defines += ['ARM_TABLE_REALCOEF_Q31']
+                defines += ['ARM_TABLE_TWIDDLECOEF_Q31_4096']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_4096']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_Q15_32']):
+                defines += ['ARM_TABLE_REALCOEF_Q15']
+                defines += ['ARM_TABLE_TWIDDLECOEF_Q15_16']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_16']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_Q15_64']):
+                defines += ['ARM_TABLE_REALCOEF_Q15']
+                defines += ['ARM_TABLE_TWIDDLECOEF_Q15_32']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_32']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_Q15_128']):
+                defines += ['ARM_TABLE_REALCOEF_Q15']
+                defines += ['ARM_TABLE_TWIDDLECOEF_Q15_64']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_64']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_Q15_256']):
+                defines += ['ARM_TABLE_REALCOEF_Q15']
+                defines += ['ARM_TABLE_TWIDDLECOEF_Q15_128']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_128']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_Q15_512']):
+                defines += ['ARM_TABLE_REALCOEF_Q15']
+                defines += ['ARM_TABLE_TWIDDLECOEF_Q15_256']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_256']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_Q15_1024']):
+                defines += ['ARM_TABLE_REALCOEF_Q15']
+                defines += ['ARM_TABLE_TWIDDLECOEF_Q15_512']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_512']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_Q15_2048']):
+                defines += ['ARM_TABLE_REALCOEF_Q15']
+                defines += ['ARM_TABLE_TWIDDLECOEF_Q15_1024']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_1024']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_Q15_4096']):
+                defines += ['ARM_TABLE_REALCOEF_Q15']
+                defines += ['ARM_TABLE_TWIDDLECOEF_Q15_2048']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_2048']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_RFFT_Q15_8192']):
+                defines += ['ARM_TABLE_REALCOEF_Q15']
+                defines += ['ARM_TABLE_TWIDDLECOEF_Q15_4096']
+                defines += ['ARM_TABLE_BITREVIDX_FXT_4096']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_DCT4_F32_128']):
+                defines += ['ARM_TABLE_DCT4_F32_128']
+                defines += ['ARM_TABLE_REALCOEF_F32']
+                defines += ['ARM_TABLE_BITREV_1024']
+                defines += ['ARM_TABLE_TWIDDLECOEF_F32_4096']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_DCT4_F32_512']):
+                defines += ['ARM_TABLE_DCT4_F32_512']
+                defines += ['ARM_TABLE_REALCOEF_F32']
+                defines += ['ARM_TABLE_BITREV_1024']
+                defines += ['ARM_TABLE_TWIDDLECOEF_F32_4096']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_DCT4_F32_2048']):
+                defines += ['ARM_TABLE_DCT4_F32_2048']
+                defines += ['ARM_TABLE_REALCOEF_F32']
+                defines += ['ARM_TABLE_BITREV_1024']
+                defines += ['ARM_TABLE_TWIDDLECOEF_F32_4096']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_DCT4_F32_8192']):
+                defines += ['ARM_TABLE_DCT4_F32_8192']
+                defines += ['ARM_TABLE_REALCOEF_F32']
+                defines += ['ARM_TABLE_BITREV_1024']
+                defines += ['ARM_TABLE_TWIDDLECOEF_F32_4096']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_DCT4_Q31_128']):
+                defines += ['ARM_TABLE_DCT4_Q31_128']
+                defines += ['ARM_TABLE_REALCOEF_Q31']
+                defines += ['ARM_TABLE_BITREV_1024']
+                defines += ['ARM_TABLE_TWIDDLECOEF_Q31_4096']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_DCT4_Q31_512']):
+                defines += ['ARM_TABLE_DCT4_Q31_512']
+                defines += ['ARM_TABLE_REALCOEF_Q31']
+                defines += ['ARM_TABLE_BITREV_1024']
+                defines += ['ARM_TABLE_TWIDDLECOEF_Q31_4096']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_DCT4_Q31_2048']):
+                defines += ['ARM_TABLE_DCT4_Q31_2048']
+                defines += ['ARM_TABLE_REALCOEF_Q31']
+                defines += ['ARM_TABLE_BITREV_1024']
+                defines += ['ARM_TABLE_TWIDDLECOEF_Q31_4096']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_DCT4_Q31_8192']):
+                defines += ['ARM_TABLE_DCT4_Q31_8192']
+                defines += ['ARM_TABLE_REALCOEF_Q31']
+                defines += ['ARM_TABLE_BITREV_1024']
+                defines += ['ARM_TABLE_TWIDDLECOEF_Q31_4096']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_DCT4_Q15_128']):
+                defines += ['ARM_TABLE_DCT4_Q15_128']
+                defines += ['ARM_TABLE_REALCOEF_Q15']
+                defines += ['ARM_TABLE_BITREV_1024']
+                defines += ['ARM_TABLE_TWIDDLECOEF_Q15_4096']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_DCT4_Q15_512']):
+                defines += ['ARM_TABLE_DCT4_Q15_512']
+                defines += ['ARM_TABLE_REALCOEF_Q15']
+                defines += ['ARM_TABLE_BITREV_1024']
+                defines += ['ARM_TABLE_TWIDDLECOEF_Q15_4096']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_DCT4_Q15_2048']):
+                defines += ['ARM_TABLE_DCT4_Q15_2048']
+                defines += ['ARM_TABLE_REALCOEF_Q15']
+                defines += ['ARM_TABLE_BITREV_1024']
+                defines += ['ARM_TABLE_TWIDDLECOEF_Q15_4096']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_DCT4_Q15_8192']):
+                defines += ['ARM_TABLE_DCT4_Q15_8192']
+                defines += ['ARM_TABLE_REALCOEF_Q15']
+                defines += ['ARM_TABLE_BITREV_1024']
+                defines += ['ARM_TABLE_TWIDDLECOEF_Q15_4096']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_ARM_CFFT_RADIX2_Q15',
+                          'UAI_CMSIS_DSP_CONFIG_TABLES_ARM_CFFT_RADIX4_Q15']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_Q15_4096']
+                defines += ['ARM_TABLE_BITREV_1024']
+
+            if IsDefined(['UAI_CMSIS_DSP_CONFIG_TABLES_ARM_CFFT_RADIX2_Q31',
+                          'UAI_CMSIS_DSP_CONFIG_TABLES_ARM_CFFT_RADIX4_Q31']):
+                defines += ['ARM_TABLE_TWIDDLECOEF_Q31_4096']
+                defines += ['ARM_TABLE_BITREV_1024']
+
+    # Remove duplicate values
+    defines = list(set(defines))
+    defines.sort()
+
+    groups += AddCodeGroup('cmsis/dsp', src,
+                           depend=['UAI_CMSIS_USING_DSP'], CPPPATH=path, CPPDEFINES=defines)
+
+if IsDefined(['UAI_CMSIS_USING_NN']):
+    # For TFLM #include "CMSIS/NN/Include/arm_nnfunctions.h"
+    path = [os.path.dirname(pwd)]
+
+    path += [pwd + '/NN/Include/']
+    src = Glob('NN/Source/*/*.c')
+    defines = ['CMSIS_NN']
+
+    groups += AddCodeGroup('cmsis/nn', src,
+                           depend=['UAI_CMSIS_USING_NN'], CPPPATH=path,  CPPDEFINES=defines)
+
+Return('groups')

@@ -1,0 +1,106 @@
+config UAI_CMSIS_USING_CORE
+    bool "Enable CMSIS Core API"
+    default n
+
+config UAI_CMSIS_USING_DSP
+    bool "Enable CMSIS DSP Software Library"
+    default n
+
+if UAI_CMSIS_USING_DSP
+    menu "CMSIS DSP Software Library"
+
+        config UAI_CMSIS_DSP_ARM_FLOAT16_SUPPORTED
+            bool
+            default n
+
+        config UAI_CMSIS_DSP_USING_BASIC_MATH
+            bool "Enable CMSIS DSP Basic Math Functions"
+            default n
+
+        config UAI_CMSIS_DSP_USING_BAYES
+            bool "Enable CMSIS DSP Bayes Functions"
+            default n
+
+        config UAI_CMSIS_DSP_USING_COMMON_TABLES
+            bool "Enable CMSIS DSP Common Tables"
+            default n
+
+        if UAI_CMSIS_DSP_USING_COMMON_TABLES
+
+            config UAI_CMSIS_DSP_CONFIG_TABLES
+            bool "Enable Configuration of Table"
+            default n
+
+            if UAI_CMSIS_DSP_CONFIG_TABLES
+                source "$SDK_ROOT/sdk/library/CMSIS/ConfigTable.Kconfig"
+            endif
+
+        endif
+
+        config UAI_CMSIS_DSP_USING_COMPLEX_MATH
+            bool "Enable CMSIS DSP Complex Math Functions"
+            select UAI_CMSIS_DSP_USING_FAST_MATH
+            default n
+
+        config UAI_CMSIS_DSP_USING_CONTROLLER
+            bool "Enable CMSIS DSP Controller Functions"
+            default n
+            select UAI_CMSIS_DSP_USING_COMMON_TABLES
+
+        config UAI_CMSIS_DSP_USING_DISTANCE
+            bool "Enable CMSIS DSP Distance Functions"
+            default n
+            select UAI_CMSIS_DSP_USING_COMMON_TABLES
+
+        config UAI_CMSIS_DSP_USING_FAST_MATH
+            bool "Enable CMSIS DSP Fast Math Functions"
+            default n
+            select UAI_CMSIS_DSP_USING_COMMON_TABLES
+
+        config UAI_CMSIS_DSP_USING_FILTERING
+            bool "Enable CMSIS DSP Filtering Functions"
+            default n
+            select UAI_CMSIS_DSP_USING_COMMON_TABLES
+
+        config UAI_CMSIS_DSP_USING_INTERPOLATION
+            bool "Enable CMSIS DSP Interpolation Functions"
+            default n
+
+        config UAI_CMSIS_DSP_USING_MATRIX
+            bool "Enable CMSIS DSP Matrix Functions"
+            default n
+
+        config UAI_CMSIS_DSP_USING_QUATERNION_MATH
+            bool "Enable CMSIS DSP Quaternion MATH Functions"
+            default n
+
+        config UAI_CMSIS_DSP_USING_STATISTICS
+            bool "Enable CMSIS DSP Statistics Functions"
+            select UAI_CMSIS_DSP_USING_BASIC_MATH
+            select UAI_CMSIS_DSP_USING_FAST_MATH
+            default n
+
+        config UAI_CMSIS_DSP_USING_SUPPORT
+            bool "Enable CMSIS DSP Support Functions"
+            default n
+
+        config UAI_CMSIS_DSP_USING_SVM
+            bool "Enable CMSIS DSP SVM Functions"
+            default n
+            select UAI_CMSIS_DSP_USING_COMMON_TABLES
+
+        config UAI_CMSIS_DSP_USING_TRANSFORM
+            bool "Enable CMSIS DSP Transform Functions"
+            default n
+            select UAI_CMSIS_DSP_USING_BASIC_MATH
+            select UAI_CMSIS_DSP_USING_COMMON_TABLES
+            select UAI_CMSIS_DSP_USING_COMPLEX_MATH
+
+    endmenu
+
+endif
+
+config UAI_CMSIS_USING_NN
+    bool "Enable CMSIS Neural Network Kernels"
+    default n
+    select UAI_CMSIS_USING_CORE

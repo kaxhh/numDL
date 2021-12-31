@@ -1,0 +1,7 @@
+config UAI_USING_UTILS
+    bool
+    default n
+
+config UAI_USING_MATRIX
+    bool
+    default n

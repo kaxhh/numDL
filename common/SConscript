@@ -1,0 +1,16 @@
+from build_tools import *
+
+pwd = PresentDir()
+
+path = [pwd]
+src = []
+
+if IsDefined(['UAI_USING_UTILS']):
+    src += Glob('uai_utils.c')
+
+if IsDefined(['UAI_USING_MATRIX']):
+    src += Glob('uai_matrix.c')
+
+group = AddCodeGroup('uai', src, depend = ['USING_UAI_SDK'], CPPPATH = path)
+
+Return('group')
