@@ -1,14 +1,14 @@
 menu "Library"
 
-config UAI_LIB_USING_CMSIS
+config NUMDL_USING_CMSIS
     bool "Enable CMSIS Software Library" 
     default n
 
-config UAI_LIB_USING_KISSFFT
+config NUMDL_USING_KISSFFT
     bool "Enable Kissfft Software Library"
     default n
 
-if UAI_LIB_USING_CMSIS
+if NUMDL_USING_CMSIS
     source "$OS_ROOT/thirdparty/matrixCpp/library/CMSIS/Kconfig"
 endif
 

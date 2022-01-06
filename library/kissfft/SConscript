@@ -2,7 +2,7 @@ from build_tools import *
 
 group = []
 
-if not IsDefined(['UAI_LIB_USING_KISSFFT']):
+if not IsDefined(['NUMDL_USING_KISSFFT']):
     Return('group')
 
 pwd = PresentDir()
@@ -10,6 +10,6 @@ pwd = PresentDir()
 path = [pwd]
 src = Glob('*.c')
 
-group = AddCodeGroup('kissfft', src, depend = ['UAI_LIB_USING_KISSFFT'], CPPPATH = path)
+group = AddCodeGroup('kissfft', src, depend = ['NUMDL_USING_KISSFFT'], CPPPATH = path)
 
 Return('group')

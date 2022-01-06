@@ -2,7 +2,7 @@ from build_tools import *
 
 group = []
 
-if not IsDefined(['UAI_USING_TEST']):
+if not IsDefined(['NUMDL_USING_TEST']):
     Return('group')
 
 pwd = PresentDir()
@@ -10,13 +10,13 @@ pwd = PresentDir()
 path = [pwd]
 src = []
 
-if IsDefined(['UAI_TEST_USING_MATRIX_TC']):
+if IsDefined(['NUMDL_TEST_USING_MATRIX_TC']):
     src += Glob('common/uai_matrix_tc.c')
 
-if IsDefined(['UAI_USING_AUDIO_FEATURE_TC']):
+if IsDefined(['NUMDL_TEST_USING_FEATURE_TC']):
     src += Glob('feature/*.cc')
     src += Glob('feature/testdata/*.c')
 
-group = AddCodeGroup('uai', src, depend = ['UAI_USING_TEST'], CPPPATH = path)
+group = AddCodeGroup('numdl', src, depend = ['NUMDL_USING_TEST'], CPPPATH = path)
 
 Return('group')

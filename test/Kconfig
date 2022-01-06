@@ -1,20 +1,20 @@
 menu "Test"
 
-config UAI_USING_TEST
+config NUMDL_USING_TEST
     bool "Enable Test Cases" 
     default n
     select OS_USING_ATEST
 
-if UAI_USING_TEST
-    config UAI_TEST_USING_MATRIX_TC
-        bool "Enable Matrix Functions Test"
+if NUMDL_USING_TEST
+    config NUMDL_TEST_USING_MATRIX_TC
+        bool "Enable numDL Matrix Functions Test"
         default n
-        select UAI_USING_MATRIX
+        select NUMDL_USING_MATRIX
 
-    config UAI_USING_AUDIO_FEATURE_TC
-        bool "Enable Audio Feature Functions Test"
+    config NUMDL_TEST_USING_FEATURE_TC
+        bool "Enable numDL Feature Functions Test"
         default n
-        select UAI_USING_AUDIO_FEATURE_FUNC
+        select NUMDL_FEATURE
 endif
 
 endmenu

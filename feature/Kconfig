@@ -1,9 +1,9 @@
 menu "Feature"
 
-config UAI_USING_AUDIO_FEATURE_FUNC
-    bool "Enable Audio Feature Functions"
-    select UAI_USING_MATRIX
-    select UAI_LIB_USING_KISSFFT
+config NUMDL_FEATURE
+    bool "Enable numDL Feature Functions"
+    select NUMDL_USING_MATRIX
+    select NUMDL_USING_KISSFFT
     default n
 
 endmenu

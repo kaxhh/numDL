@@ -2,7 +2,7 @@ from build_tools import *
 
 group = []
 
-if not IsDefined(['UAI_USING_AUDIO_FEATURE_FUNC']):
+if not IsDefined(['NUMDL_FEATURE']):
     Return('group')
 
 pwd = PresentDir()
@@ -12,6 +12,6 @@ src = []
 
 src += Glob('*.cc')
 
-group = AddCodeGroup('uai', src, depend = ['UAI_USING_AUDIO_FEATURE_FUNC'], CPPPATH = path)
+group = AddCodeGroup('numdl', src, depend = ['NUMDL_FEATURE'], CPPPATH = path)
 
 Return('group')

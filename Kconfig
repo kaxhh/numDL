@@ -1,18 +1,11 @@
-menu "AI"
+menu "numDL"
 
-config USING_UAI_SDK
-    bool
-    default y
+config USING_NUMDL
+    bool "Enable numDL"
+    select NUMDL_USING_UTILS
+    default n
 
-menu "Data"
-
-    config UAI_USING_DATA_COLLECT
-        bool "Enable Data Sample"
-        select USING_UAI_SDK
-        select UAI_USING_UTILS
-        default n
-
-endmenu
+if USING_NUMDL
 
 source "$OS_ROOT/thirdparty/matrixCpp/common/Kconfig"
 
@@ -22,4 +15,5 @@ source "$OS_ROOT/thirdparty/matrixCpp/library/Kconfig"
 
 source "$OS_ROOT/thirdparty/matrixCpp/test/Kconfig"
 
+endif
 endmenu

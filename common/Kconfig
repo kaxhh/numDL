@@ -1,7 +1,7 @@
-config UAI_USING_UTILS
+config NUMDL_USING_UTILS
     bool
     default n
 
-config UAI_USING_MATRIX
+config NUMDL_USING_MATRIX
     bool
     default n
