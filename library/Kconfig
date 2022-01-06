@@ -9,7 +9,7 @@ config NUMDL_USING_KISSFFT
     default n
 
 if NUMDL_USING_CMSIS
-    source "$OS_ROOT/thirdparty/matrixCpp/library/CMSIS/Kconfig"
+    source "$OS_ROOT/thirdparty/numDL/library/CMSIS/Kconfig"
 endif
 
 endmenu

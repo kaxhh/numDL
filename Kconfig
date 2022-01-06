@@ -7,13 +7,13 @@ config USING_NUMDL
 
 if USING_NUMDL
 
-source "$OS_ROOT/thirdparty/matrixCpp/common/Kconfig"
+source "$OS_ROOT/thirdparty/numDL/common/Kconfig"
 
-source "$OS_ROOT/thirdparty/matrixCpp/feature/Kconfig"
+source "$OS_ROOT/thirdparty/numDL/feature/Kconfig"
 
-source "$OS_ROOT/thirdparty/matrixCpp/library/Kconfig"
+source "$OS_ROOT/thirdparty/numDL/library/Kconfig"
 
-source "$OS_ROOT/thirdparty/matrixCpp/test/Kconfig"
+source "$OS_ROOT/thirdparty/numDL/test/Kconfig"
 
 endif
 endmenu

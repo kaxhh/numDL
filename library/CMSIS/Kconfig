@@ -32,7 +32,7 @@ if UAI_CMSIS_USING_DSP
             default n
 
             if UAI_CMSIS_DSP_CONFIG_TABLES
-                source "$OS_ROOT/thirdparty/matrixCpp/library/CMSIS/ConfigTable.Kconfig"
+                source "$OS_ROOT/thirdparty/numDL/library/CMSIS/ConfigTable.Kconfig"
             endif
 
         endif
