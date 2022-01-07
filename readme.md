@@ -2,11 +2,11 @@
 
 ### 1.前言
 
-现在它的名字叫`matrixCpp`，为什么这么叫呢？因为里面有很多矩阵运算，而且语言也是cpp写的，所以就这么叫了。
+之前它的名字叫`matrixCpp`，为什么这么叫呢？因为里面有很多矩阵运算，而且语言也是cpp写的，所以就这么叫了。
 
 其实我们参考的是`numPy`，本来想叫`numCPP`的，结果已经有库这么叫了。
 
-现在，我又想到了一个好名字：`numDL`，为什么这么叫呢？首先，我们参考的是`numPy`，所以取`num`，其次，我们主要将它用于深度学习，嵌入式人工智能，且会用到相关的库，比如：`cmsisNN`。因此，我举得：`numDL`更好。
+现在，我又想到了一个好名字：`numDL`，为什么这么叫呢？首先，我们参考的是`numPy`，所以取`num`，其次，我们主要将它用于深度学习，嵌入式人工智能，且会用到相关的库，比如：`cmsisNN`。因此，我觉得：`numDL`更好。
 
 ### 2.之前
 
@@ -17,10 +17,7 @@
 │      uai_matrix.c             //uai的矩阵创建和销毁
 │      uai_utils.c              //base64
 ├─feature
-│      uai_audio.cc
 │      uai_dsp.cc               //现在就做一点dsp他模仿的是numpy，把它C化！
-│      uai_functions.cc
-│      uai_processing.cc
 │      
 ├─library                       //神经网络库
 │  ├─CMSIS                      //目前只有cmsis，以后会支持nmsis
@@ -33,10 +30,7 @@
     ├─common
     │      uai_matrix_tc.c
     └─feature
-        │  uai_audio_tc.cc
         │  uai_dsp_tc.cc
-        │  uai_functions_tc.cc
-        │  uai_processing_tc.cc
         └─testdata
 ```
 
@@ -53,22 +47,22 @@
 
 #### 3.1 uai_dsp.cc
 
-| numPy | numCpp | numDL                                                        |
-| ----- | ------ | ------------------------------------------------------------ |
-|       |        | static float sum(float*     input, <br/>                            os_size_t size); |
-|       |        | static int dot(uai_mat_t* mat1, <br/>                       uai_mat_t* mat2, <br/>                       uai_mat_t* output); |
-|       |        | static int dot_by_row(os_size_t mat1_row,<br/>                          float* mat1_row_data,<br/>                          os_size_t mat1_cols,<br/>                          uai_mat_t* mat2,<br/>                          uai_mat_t* output); |
-|       |        | static int int16_to_float(const os_int16_t* src,<br/>                              float* dst,<br/>                              os_size_t size); |
-|       |        | static float log(float a);                                   |
-|       |        | static float log2(float a);                                  |
-|       |        | static float log10(float a);                                 |
-|       |        | static int log(uai_mat_t* matrix);                           |
-|       |        | static int log10(uai_mat_t* matrix);                         |
-|       |        | static int linspace(float start, float stop, <br/>                               os_size_t num, float* out); |
-|       |        | static int linspace(os_int16_t start,<br/>                        os_int16_t stop,<br/>                        os_size_t num,<br/>                        os_int16_t* out); |
-|       |        | static int linspace(os_int32_t start,<br/>                        os_int32_t stop,<br/>                        os_size_t num,<br/>                        os_int32_t* out); |
-|       |        | static int rfft(const float* src,<br/>                    os_size_t src_len,<br/>                    float* out,<br/>                    os_size_t out_len,<br/>                    os_size_t fft_len); |
-|       |        | static int dct2(uai_mat_t* mat, dct_norm_t mode);            |
+| numPy | numCpp | numDL                                                        | 类型               |
+| ----- | ------ | ------------------------------------------------------------ | ------------------ |
+|       |        | static float sum(float*     input, <br/>                            os_size_t size); | 矩阵求和           |
+|       |        | static int dot(uai_mat_t* mat1, <br/>                       uai_mat_t* mat2, <br/>                       uai_mat_t* output); | 数学函数：点积     |
+|       |        | static int dot_by_row(os_size_t mat1_row,<br/>                          float* mat1_row_data,<br/>                          os_size_t mat1_cols,<br/>                          uai_mat_t* mat2,<br/>                          uai_mat_t* output); | 数学函数：点积     |
+|       |        | static int int16_to_float(const os_int16_t* src,<br/>                              float* dst,<br/>                              os_size_t size); |                    |
+|       |        | static float log(float a);                                   | 数学函数：log      |
+|       |        | static float log2(float a);                                  | 数学函数：log2     |
+|       |        | static float log10(float a);                                 | 数学函数：log10    |
+|       |        | static int log(uai_mat_t* matrix);                           | 数学函数：log      |
+|       |        | static int log10(uai_mat_t* matrix);                         | 数学函数：log10    |
+|       |        | static int linspace(float start, float stop, <br/>                               os_size_t num, float* out); | 初始化：序列生成器 |
+|       |        | static int linspace(os_int16_t start,<br/>                        os_int16_t stop,<br/>                        os_size_t num,<br/>                        os_int16_t* out); | 初始化：序列生成器 |
+|       |        | static int linspace(os_int32_t start,<br/>                        os_int32_t stop,<br/>                        os_size_t num,<br/>                        os_int32_t* out); | 初始化：序列生成器 |
+|       |        | static int rfft(const float* src,<br/>                    os_size_t src_len,<br/>                    float* out,<br/>                    os_size_t out_len,<br/>                    os_size_t fft_len); | 无                 |
+|       |        | static int dct2(uai_mat_t* mat, dct_norm_t mode);            | 无                 |
 
 #### 3.2 uai_matrix.c
 
@@ -78,7 +72,15 @@
 |       |        | void uai_mat_destroy(uai_mat_t* mat);                      |
 |       |        |                                                            |
 
+### 4.numCpp有啥？
 
+1. 矩阵的初始化
+2. 矩阵的切片
+3. 生成随机岁组
+4. 矩阵的连接
+5. 举证的翻转，变形！
+6. 矩阵的逻辑和比较，排序运算
+7. 数学函数！
 
 
 
