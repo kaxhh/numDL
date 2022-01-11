@@ -72,15 +72,63 @@
 |       |        | void uai_mat_destroy(uai_mat_t* mat);                      |
 |       |        |                                                            |
 
-### 4.numCpp有啥？
+### 4.numCpp
 
 1. 矩阵的初始化
 2. 矩阵的切片
-3. 生成随机岁组
+3. 生成随机数组
 4. 矩阵的连接
 5. 举证的翻转，变形！
 6. 矩阵的逻辑和比较，排序运算
 7. 数学函数！
+
+numCpp有个特色，就是全是hpp文件，全是头文件，直接可以用。有点意思哦。
+
+模板template让它的代码变得简洁。
+
+```
+#include "NumCpp/Coordinates.hpp"    //坐标
+#include "NumCpp/Core.hpp"           //基础功能！
+#include "NumCpp/Filter.hpp"         //过滤器
+#include "NumCpp/Functions.hpp"      //数学函数！
+#include "NumCpp/ImageProcessing.hpp"    //图像处理
+#include "NumCpp/Integrate.hpp"      //积分
+#include "NumCpp/Linalg.hpp"         //线性代数
+#include "NumCpp/NdArray.hpp"        //常用！
+#include "NumCpp/Polynomial.hpp"     //多项式
+#include "NumCpp/PythonInterface.hpp"     //python接口
+#include "NumCpp/Random.hpp"         //随机值
+#include "NumCpp/Roots.hpp"          //求根法
+#include "NumCpp/Rotations.hpp"      //矩阵旋转
+#include "NumCpp/Special.hpp"        //特殊函数
+#include "NumCpp/Utils.hpp"			//基础功能！
+#include "NumCpp/Vector.hpp"        //向量函数！
+```
+
+#### 4.1 先做啥？
+
+从上面的细分来说：先做基础功能，数学函数，常用。
+
+```
+#include "NumCpp/Core.hpp"           //基础功能！
+#include "NumCpp/NdArray.hpp"        //常用！
+#include "NumCpp/Utils.hpp"			//基础功能！
+#include "NumCpp/Functions.hpp"      //数学函数！
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

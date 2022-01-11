@@ -38,12 +38,6 @@
 #define UAI_LOG_TAG "uai.dsp"
 #include "uai_log.h"
 
-#ifdef UAI_CMSIS_USING_DSP
-/* This file causes type with no linkage used to declare variable warning with
- * g++. @see https://github.com/ARM-software/CMSIS_5/issues/617 */
-#include <arm_math.h>
-#endif
-
 #include <kiss_fftr.h>
 
 #include <math.h>
@@ -93,32 +87,12 @@ int dsp::dot(uai_mat_t* mat1, uai_mat_t* mat2, uai_mat_t* output)
     OS_ASSERT(mat1->rows == output->rows);
     OS_ASSERT(mat2->cols == output->cols);
 
-#ifdef UAI_CMSIS_DSP_USING_MATRIX
-    const arm_matrix_instance_f32 arm_mat1 = {
-        .numRows = static_cast<uint16_t>(mat1->rows),
-        .numCols = static_cast<uint16_t>(mat1->cols),
-        .pData = mat1->data};
-    const arm_matrix_instance_f32 arm_mat2 = {
-        .numRows = static_cast<uint16_t>(mat2->rows),
-        .numCols = static_cast<uint16_t>(mat2->cols),
-        .pData = mat2->data};
-    arm_matrix_instance_f32 arm_output = {
-        .numRows = static_cast<uint16_t>(output->rows),
-        .numCols = static_cast<uint16_t>(output->cols),
-        .pData = output->data};
-
-    int arm_status = arm_mat_mult_f32(&arm_mat1, &arm_mat2, &arm_output);
-    if (arm_status != ARM_MATH_SUCCESS) {
-        return UAI_ERROR;
-    }
-#else
     memset(output->data, 0, output->rows * output->cols * sizeof(float));
 
     for (os_size_t i = 0; i < mat1->rows; i++) {
         dsp::dot_by_row(
             i, mat1->data + (i * mat1->cols), mat1->cols, mat2, output);
     }
-#endif
 
     return UAI_EOK;
 }
@@ -145,25 +119,7 @@ int dsp::dot_by_row(os_size_t mat1_row,
     OS_ASSERT(output != OS_NULL);
     OS_ASSERT(mat1_cols == mat2->rows);
     OS_ASSERT(mat2->cols == output->cols);
-#ifdef UAI_CMSIS_DSP_USING_MATRIX
-    const arm_matrix_instance_f32 arm_mat1 = {
-        .numRows = 1,
-        .numCols = static_cast<uint16_t>(mat1_cols),
-        .pData = mat1_row_data};
-    const arm_matrix_instance_f32 arm_mat2 = {
-        .numRows = static_cast<uint16_t>(mat2->rows),
-        .numCols = static_cast<uint16_t>(mat2->cols),
-        .pData = mat2->data};
-    arm_matrix_instance_f32 arm_output = {
-        .numRows = 1,
-        .numCols = static_cast<uint16_t>(output->cols),
-        .pData = &output->data[mat1_row * output->cols]};
 
-    int arm_status = arm_mat_mult_f32(&arm_mat1, &arm_mat2, &arm_output);
-    if (arm_status != ARM_MATH_SUCCESS) {
-        return UAI_ERROR;
-    }
-#else
     for (os_size_t i = 0; i < mat2->cols; i++) {
         float tmp = 0.0;
         for (os_size_t j = 0; j < mat1_cols; j++) {
@@ -171,7 +127,6 @@ int dsp::dot_by_row(os_size_t mat1_row,
         }
         output->data[mat1_row * mat2->cols + i] = tmp;
     }
-#endif
 
     return UAI_EOK;
 }
@@ -193,14 +148,10 @@ int dsp::int16_to_float(const os_int16_t* input,
     OS_ASSERT(input != OS_NULL);
     OS_ASSERT(output != OS_NULL);
 
-#ifdef UAI_CMSIS_DSP_USING_SUPPORT
-    arm_q15_to_float((q15_t*)input, output, length);
-#else
     for (os_size_t i = 0; i < length; i++) {
         output[i] = (float)input[i] / 32768.f;
     }
 
-#endif
 
     return UAI_EOK;
 }
@@ -215,12 +166,8 @@ int dsp::int16_to_float(const os_int16_t* input,
 float dsp::log(float a)
 {
     float r = 0.0;
-#ifdef UAI_CMSIS_DSP_USING_FAST_MATH
-    float src = a;
-    arm_vlog_f32(&src, &r, 1);
-#else
+
     r = logf(a);
-#endif
 
     return r;
 }
@@ -506,40 +453,7 @@ int dsp::rfft(const float* src,
 
     int ret = UAI_EOK;
 
-#if defined(UAI_CMSIS_DSP_USING_TRANSFORM) &&                                  \
-    defined(UAI_CMSIS_DSP_USING_COMPLEX_MATH)
-    arm_rfft_fast_instance_f32 rfft_instance = {0};
-    arm_status status = arm_rfft_fast_init_f32(&rfft_instance, fft_len);
-    if (ARM_MATH_ARGUMENT_ERROR == status) {
-        /* Use FFT length is not supported. Supported FFT Lengths are 32, 64,
-         * 128, 256, 512, 1024, 2048, 4096. */
-        WARN("ARM math FFT init failed with error code(%d)", status);
-        ret = kiss_rfft(src_mat->data, out, fft_len, feat_len);
-    } else if (ARM_MATH_SUCCESS == status) {
-        float* cpx_out = (float*)malloc(sizeof(float) * fft_len);
-        if (cpx_out == OS_NULL) {
-            ret = UAI_ENOMEM;
-        } else {
-            arm_rfft_fast_f32(&rfft_instance, src_mat->data, cpx_out, 0);
-
-            /** Convert complex number output to real number, output data format
-             * @see arm_rfft_fast_f32 */
-            out[0] = fabs(cpx_out[0]);
-            out[feat_len - 1] = fabs(cpx_out[1]);
-
-            arm_cmplx_mag_f32(&cpx_out[2], &out[1], feat_len - 2);
-
-            free(cpx_out);
-            ret = UAI_EOK;
-        }
-    } else {
-        ERROR("ARM math FFT calculation failed with error code(%d)", status);
-        ret = UAI_ERROR;
-    }
-
-#else
     ret = kiss_rfft(src_mat->data, out, fft_len, feat_len);
-#endif
 
     uai_mat_destroy(src_mat);
 
@@ -591,43 +505,8 @@ static int dct2_transform(float* data, os_size_t data_len)
 
     int ret = UAI_EOK;
 
-#if defined(UAI_CMSIS_DSP_USING_TRANSFORM) &&                                  \
-    defined(UAI_CMSIS_DSP_USING_COMPLEX_MATH)
-    arm_rfft_fast_instance_f32 rfft_instance = {0};
-    arm_status status = arm_rfft_fast_init_f32(&rfft_instance, data_len);
-    if (ARM_MATH_ARGUMENT_ERROR == status) {
-        /* Use FFT length is not supported. Supported FFT Lengths are 32,
-        64,
-         * 128, 256, 512, 1024, 2048, 4096. */
-        WARN("ARM math FFT init failed with error code(%d)", status);
-        ret = kiss_rfft_cpx(fft_data_in, fft_data_out, data_len);
-    } else if (ARM_MATH_SUCCESS == status) {
-        float* cpx_out = (float*)malloc(sizeof(float) * data_len);
-        if (cpx_out == OS_NULL) {
-            ret = UAI_ENOMEM;
-        } else {
-            arm_rfft_fast_f32(&rfft_instance, fft_data_in, cpx_out, 0);
-
-            fft_data_out[0].r = cpx_out[0];
-            fft_data_out[0].i = 0;
-            fft_data_out[data_len / 2].r = cpx_out[1];
-            fft_data_out[data_len / 2].i = 0;
-
-            os_size_t fft_dat_out_ix = 2;
-            for (size_t ix = 1; ix < data_len / 2; ix += 1) {
-                fft_data_out[ix].r = cpx_out[fft_dat_out_ix];
-                fft_data_out[ix].i = cpx_out[fft_dat_out_ix + 1];
-
-                fft_dat_out_ix += 2;
-            }
-
-            free(cpx_out);
-            ret = UAI_EOK;
-        }
-    }
-#else
     ret = kiss_rfft_cpx(fft_data_in, fft_data_out, data_len);
-#endif
+
 
     for (os_size_t i = 0; i < data_len / 2 + 1; i++) {
         float temp = i * M_PI / (data_len * 2);
