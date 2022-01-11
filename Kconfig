@@ -6,6 +6,8 @@ config USING_NUMDL
 
 if USING_NUMDL
 
+source "$OS_ROOT/thirdparty/numDL/numdl/Kconfig"
+
 source "$OS_ROOT/thirdparty/numDL/feature/Kconfig"
 
 source "$OS_ROOT/thirdparty/numDL/library/Kconfig"

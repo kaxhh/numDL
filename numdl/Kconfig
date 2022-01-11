@@ -1,0 +1,7 @@
+menu "Candy"
+
+config NUMDL_CANDY
+    bool "Enable numDL Magic Candy"
+    default n
+
+endmenu
