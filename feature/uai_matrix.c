@@ -25,7 +25,7 @@
 #include "uai_matrix.h"
 
 #define UAI_LOG_TAG "uai.mat"
-#include "uai_log.h"
+#include "nd_log.h"
 
 #include <os_memory.h>
 #include <os_assert.h>

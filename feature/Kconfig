@@ -2,7 +2,6 @@ menu "Feature"
 
 config NUMDL_FEATURE
     bool "Enable numDL Feature Functions"
-    select NUMDL_USING_MATRIX
     select NUMDL_USING_KISSFFT
     default n
 

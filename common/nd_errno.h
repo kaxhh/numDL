@@ -14,7 +14,7 @@
  *License for the specific language governing permissions and limitations under
  *the License.
  *
- * @file        uai_errno.h
+ * @file        nd_errno.h
  *
  * @revision
  * Date         Author          Notes
@@ -22,29 +22,29 @@
  *******************************************************************************
  */
 
-#ifndef __UAI_ERRNO_H__
-#define __UAI_ERRNO_H__
+#ifndef __NUMDL_ERRNO_H__
+#define __NUMDL_ERRNO_H__
 
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
 
-#define UAI_EOK      (0)  /* There is no error. */
-#define UAI_ERROR    (1)  /* A generic error happens. */
-#define UAI_ETIMEOUT (2)  /* Timed out. */
-#define UAI_EFULL    (3)  /* The resource is full. */
-#define UAI_EEMPTY   (4)  /* The resource is empty. */
-#define UAI_ENOMEM   (5)  /* No memory. */
-#define UAI_ENOSYS   (6)  /* Function not implemented. */
-#define UAI_EBUSY    (7)  /* Busy. */
-#define UAI_EIO      (8)  /* IO error. */
-#define UAI_EINTR    (9)  /* Interrupted system call. */
-#define UAI_EINVAL   (10) /* Invalid argument. */
-#define UAI_ENODEV   (11) /* No such device */
-#define UAI_EPERM    (12) /* Operation not permitted */
+#define NUMDL_EOK      (0)  /* There is no error. */
+#define NUMDL_ERROR    (1)  /* A generic error happens. */
+#define NUMDL_ETIMEOUT (2)  /* Timed out. */
+#define NUMDL_EFULL    (3)  /* The resource is full. */
+#define NUMDL_EEMPTY   (4)  /* The resource is empty. */
+#define NUMDL_ENOMEM   (5)  /* No memory. */
+#define NUMDL_ENOSYS   (6)  /* Function not implemented. */
+#define NUMDL_EBUSY    (7)  /* Busy. */
+#define NUMDL_EIO      (8)  /* IO error. */
+#define NUMDL_EINTR    (9)  /* Interrupted system call. */
+#define NUMDL_EINVAL   (10) /* Invalid argument. */
+#define NUMDL_ENODEV   (11) /* No such device */
+#define NUMDL_EPERM    (12) /* Operation not permitted */
 
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
 
-#endif /* __UAI_ERRNO_H__ */
+#endif /* __NUMDL_ERRNO_H__ */

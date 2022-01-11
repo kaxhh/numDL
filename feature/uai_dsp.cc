@@ -33,10 +33,10 @@
  */
 
 #include "uai_dsp.h"
-#include "uai_errno.h"
+#include "nd_errno.h"
 
-#define UAI_LOG_TAG "uai.dsp"
-#include "uai_log.h"
+#define NUMDL_LOG_TAG "uai.dsp"
+#include "nd_log.h"
 
 #include <kiss_fftr.h>
 
@@ -94,7 +94,7 @@ int dsp::dot(uai_mat_t* mat1, uai_mat_t* mat2, uai_mat_t* output)
             i, mat1->data + (i * mat1->cols), mat1->cols, mat2, output);
     }
 
-    return UAI_EOK;
+    return NUMDL_EOK;
 }
 
 /**
@@ -128,7 +128,7 @@ int dsp::dot_by_row(os_size_t mat1_row,
         output->data[mat1_row * mat2->cols + i] = tmp;
     }
 
-    return UAI_EOK;
+    return NUMDL_EOK;
 }
 
 /**
@@ -153,7 +153,7 @@ int dsp::int16_to_float(const os_int16_t* input,
     }
 
 
-    return UAI_EOK;
+    return NUMDL_EOK;
 }
 
 /**
@@ -216,7 +216,7 @@ int dsp::log(uai_mat_t* matrix)
         matrix->data[i] = dsp::log(matrix->data[i]);
     }
 
-    return UAI_EOK;
+    return NUMDL_EOK;
 }
 
 /**
@@ -234,7 +234,7 @@ int dsp::log10(uai_mat_t* matrix)
         matrix->data[i] = dsp::log10(matrix->data[i]);
     }
 
-    return UAI_EOK;
+    return NUMDL_EOK;
 }
 
 /**
@@ -258,7 +258,7 @@ int dsp::linspace(float start, float stop, os_size_t num, float* out)
 
     if (1 == num) {
         out[0] = start;
-        return UAI_EOK;
+        return NUMDL_EOK;
     }
 
     // step size
@@ -272,7 +272,7 @@ int dsp::linspace(float start, float stop, os_size_t num, float* out)
     // last entry always stop
     out[num - 1] = stop;
 
-    return UAI_EOK;
+    return NUMDL_EOK;
 }
 
 /**
@@ -299,7 +299,7 @@ int dsp::linspace(os_int16_t start,
 
     if (1 == num) {
         out[0] = start;
-        return UAI_EOK;
+        return NUMDL_EOK;
     }
 
     // step size
@@ -313,7 +313,7 @@ int dsp::linspace(os_int16_t start,
     // last entry always stop
     out[num - 1] = stop;
 
-    return UAI_EOK;
+    return NUMDL_EOK;
 }
 
 /**
@@ -340,7 +340,7 @@ int dsp::linspace(os_int32_t start,
 
     if (1 == num) {
         out[0] = start;
-        return UAI_EOK;
+        return NUMDL_EOK;
     }
 
     // step size
@@ -354,7 +354,7 @@ int dsp::linspace(os_int32_t start,
     // last entry always stop
     out[num - 1] = stop;
 
-    return UAI_EOK;
+    return NUMDL_EOK;
 }
 
 static int kiss_rfft_cpx(const float* src,
@@ -367,14 +367,14 @@ static int kiss_rfft_cpx(const float* src,
     kiss_fftr_cfg cfg = kiss_fftr_alloc(fft_len, 0, OS_NULL, OS_NULL);
     if (OS_NULL == cfg) {
         ERROR("Allocate fft cfg error.");
-        return UAI_ENOMEM;
+        return NUMDL_ENOMEM;
     }
 
     kiss_fftr(cfg, src, cpx_out);
 
     free(cfg);
 
-    return UAI_EOK;
+    return NUMDL_EOK;
 }
 
 static int kiss_rfft(const float* src,
@@ -389,11 +389,11 @@ static int kiss_rfft(const float* src,
         (kiss_fft_cpx*)malloc(feat_len * sizeof(kiss_fft_cpx));
     if (OS_NULL == cpx_out) {
         ERROR("Allocate output cpx buffer error.");
-        return UAI_ENOMEM;
+        return NUMDL_ENOMEM;
     }
 
     int ret = kiss_rfft_cpx(src, cpx_out, fft_len);
-    if (UAI_EOK != ret) {
+    if (NUMDL_EOK != ret) {
         ERROR("Kiss rfft error.");
         free(cpx_out);
         return ret;
@@ -404,7 +404,7 @@ static int kiss_rfft(const float* src,
     }
 
     free(cpx_out);
-    return UAI_EOK;
+    return NUMDL_EOK;
 }
 
 /**
@@ -435,7 +435,7 @@ int dsp::rfft(const float* src,
         ERROR("The output buffer length(%d) mismatch, should be %d",
               out_len,
               feat_len);
-        return UAI_EINVAL;
+        return NUMDL_EINVAL;
     }
 
     /* If fft_len is smaller than the length of the source, the input is
@@ -446,12 +446,12 @@ int dsp::rfft(const float* src,
 
     uai_mat_t* src_mat = uai_mat_create(1, fft_len);
     if (OS_NULL == src_mat) {
-        return UAI_ENOMEM;
+        return NUMDL_ENOMEM;
     }
 
     memcpy(src_mat->data, src, src_len * sizeof(float));
 
-    int ret = UAI_EOK;
+    int ret = NUMDL_EOK;
 
     ret = kiss_rfft(src_mat->data, out, fft_len, feat_len);
 
@@ -482,7 +482,7 @@ static int dct2_transform(float* data, os_size_t data_len)
     float* fft_data_in = (float*)calloc(1, data_len * sizeof(float));
     if (fft_data_in == OS_NULL) {
         ERROR("Allocate fft_data_in buffer error.");
-        return UAI_ENOMEM;
+        return NUMDL_ENOMEM;
     }
 
     os_size_t fft_data_out_size = (data_len / 2 + 1) * sizeof(kiss_fft_cpx);
@@ -490,7 +490,7 @@ static int dct2_transform(float* data, os_size_t data_len)
     if (fft_data_out == OS_NULL) {
         ERROR("Allocate fft_data_out buffer error.");
         free(fft_data_in);
-        return UAI_ENOMEM;
+        return NUMDL_ENOMEM;
     }
 
     /** Preprocess the input buffer with the data */
@@ -503,7 +503,7 @@ static int dct2_transform(float* data, os_size_t data_len)
         fft_data_in[half_len] = data[data_len - 1];
     }
 
-    int ret = UAI_EOK;
+    int ret = NUMDL_EOK;
 
     ret = kiss_rfft_cpx(fft_data_in, fft_data_out, data_len);
 
@@ -524,7 +524,7 @@ static int dct2_by_row(float* data, os_size_t length, dct_norm_t mode)
     OS_ASSERT(data != OS_NULL);
 
     int ret = dct2_transform(data, length);
-    if (ret != UAI_EOK) {
+    if (ret != NUMDL_EOK) {
         return ret;
     }
 
@@ -540,7 +540,7 @@ static int dct2_by_row(float* data, os_size_t length, dct_norm_t mode)
         }
     }
 
-    return UAI_EOK;
+    return NUMDL_EOK;
 }
 
 /**
@@ -557,13 +557,13 @@ int dsp::dct2(uai_mat_t* mat, dct_norm_t mode)
 
     for (os_size_t row = 0; row < mat->rows; row++) {
         int ret = dct2_by_row(&mat->data[row * mat->cols], mat->cols, mode);
-        if (ret != UAI_EOK) {
+        if (ret != NUMDL_EOK) {
             ERROR("DCT2 row %d failed.", row);
             return ret;
         }
     }
 
-    return UAI_EOK;
+    return NUMDL_EOK;
 }
 };  // namespace feature
 };  // namespace uai

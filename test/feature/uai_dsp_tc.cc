@@ -25,7 +25,7 @@
 #include "testdata/yes_30ms_testdata.h"
 
 #include <uai_dsp.h>
-#include <uai_errno.h>
+#include <nd_errno.h>
 #include <uai_matrix.h>
 
 #include <stdio.h>
@@ -80,7 +80,7 @@ static void test_mat_dot(void)
     uai_mat_t* output = uai_mat_create(2, 2);
 
     int ret = dsp::dot(&mat1, &mat2, output);
-    tp_assert_integer_equal(ret, UAI_EOK);
+    tp_assert_integer_equal(ret, NUMDL_EOK);
 
     os_bool_t dot_check = OS_TRUE;
     for (os_size_t i = 0; i < output->rows * output->cols; i++) {
@@ -104,7 +104,7 @@ static void test_linspace_float(void)
     float out_except_f[] = {0.0, 0.25, 0.5, 0.75, 1.0};
 
     int ret = dsp::linspace(start_f, end_f, num, out_f);
-    tp_assert_integer_equal(ret, UAI_EOK);
+    tp_assert_integer_equal(ret, NUMDL_EOK);
 
     os_bool_t linspace_check = OS_TRUE;
     for (os_size_t i = 0; i < num; i++) {
@@ -126,7 +126,7 @@ static void test_linspace_i16(void)
     os_int16_t out_except_i16[] = {0, 2, 4, 6, 8, 10};
 
     int ret = dsp::linspace(start_i16, end_i16, num, out_i16);
-    tp_assert_integer_equal(ret, UAI_EOK);
+    tp_assert_integer_equal(ret, NUMDL_EOK);
 
     os_bool_t linspace_check = OS_TRUE;
     for (os_size_t i = 0; i < num; i++) {
@@ -147,7 +147,7 @@ static void test_linspace_i32(void)
     os_int32_t out_except_i32[] = {0, 20000, 40000, 60000, 80000, 100000};
 
     int ret = dsp::linspace(start_i32, end_i32, num, out_i32);
-    tp_assert_integer_equal(ret, UAI_EOK);
+    tp_assert_integer_equal(ret, NUMDL_EOK);
 
     os_bool_t linspace_check = OS_TRUE;
     for (os_size_t i = 0; i < num; i++) {
@@ -169,7 +169,7 @@ static void test_linspace(void)
 static void test_int16_to_float(void)
 {
     int ret = dsp::int16_to_float(g_yes_30ms_int16, gs_output_float, gs_size);
-    tp_assert_integer_equal(ret, UAI_EOK);
+    tp_assert_integer_equal(ret, NUMDL_EOK);
 
     os_bool_t convert_check = OS_TRUE;
     for (os_size_t i = 0; i < gs_size; i++) {
@@ -265,7 +265,7 @@ static void test_log_mat_function(void)
     uai_mat_t result = {.rows = 1, .cols = 5, .data = log_result};
 
     int ret = dsp::log(&test);
-    tp_assert_integer_equal(ret, UAI_EOK);
+    tp_assert_integer_equal(ret, NUMDL_EOK);
 
     os_bool_t log_check = OS_TRUE;
     for (os_size_t i = 0; i < test.cols * test.rows; i++) {
@@ -290,7 +290,7 @@ static void test_rfft_function(void)
     float* out = (float*)os_calloc(1, sizeof(float) * out_len);
 
     int ret = dsp::rfft(g_yes_30ms_preemphasis, gs_size, out, out_len, fft_len);
-    tp_assert_integer_equal(ret, UAI_EOK);
+    tp_assert_integer_equal(ret, NUMDL_EOK);
 
     os_bool_t rfft_check = OS_TRUE;
     for (os_size_t i = 0; i < out_len; i++) {

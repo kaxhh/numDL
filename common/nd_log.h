@@ -14,7 +14,7 @@
  *License for the specific language governing permissions and limitations under
  *the License.
  *
- * @file        uai_log.h
+ * @file        nd_log.h
  *
  * @revision
  * Date         Author          Notes
@@ -22,75 +22,56 @@
  *******************************************************************************
  */
 
-#ifndef __UAI_LOG_H__
-#define __UAI_LOG_H__
-
-#include <oneos_config.h>
+#ifndef __NUMDL_LOG_H__
+#define __NUMDL_LOG_H__
 
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
 
-#if !defined(UAI_LOG_TAG)
-#define UAI_LOG_TAG "uai"
+#if !defined(NUMDL_LOG_TAG)
+#define NUMDL_LOG_TAG "numDL"
 #endif
 
-#ifdef OS_USING_DLOG
-#include <dlog.h>
-
-/* Debug contorol by dlog config */
-#define ERROR(fmt, ...) LOG_E(UAI_LOG_TAG, fmt, ##__VA_ARGS__)
-
-#define WARN(fmt, ...) LOG_W(UAI_LOG_TAG, fmt, ##__VA_ARGS__)
-
-#define INFO(fmt, ...) LOG_I(UAI_LOG_TAG, fmt, ##__VA_ARGS__)
-
-#define DEBUG(fmt, ...) LOG_D(UAI_LOG_TAG, fmt, ##__VA_ARGS__)
-
-#else /* Not define OS_USING_DLOG, using kernel printf */
-#include <os_util.h>
-
-#if !defined(UAI_LOG_LVL)
-#define UAI_LOG_LVL UAI_LOG_INFO
+#if !defined(NUMDL_LOG_LVL)
+#define NUMDL_LOG_LVL NUMDL_LOG_INFO
 #endif
 
-#define UAI_LOG_ERROR   (3) /* Error conditions */
-#define UAI_LOG_WARNING (4) /* Warning conditions */
-#define UAI_LOG_INFO    (6) /* Informational */
-#define UAI_LOG_DEBUG   (7) /* Debug-level messages */
+#define NUMDL_LOG_ERROR   (3) /* Error conditions */
+#define NUMDL_LOG_WARNING (4) /* Warning conditions */
+#define NUMDL_LOG_INFO    (6) /* Informational */
+#define NUMDL_LOG_DEBUG   (7) /* Debug-level messages */
 
-#if (UAI_LOG_ERROR <= UAI_LOG_LVL)
+#if (NUMDL_LOG_ERROR <= NUMDL_LOG_LVL)
 #define ERROR(fmt, ...)                                                        \
-    os_kprintf("[ERROR] [%s] " fmt "\r\n", UAI_LOG_TAG, ##__VA_ARGS__);
+    printf("[ERROR] [%s] " fmt "\r\n", NUMDL_LOG_TAG, ##__VA_ARGS__);
 #else
 #define ERROR(fmt, ...)
 #endif
 
-#if (UAI_LOG_WARNING <= UAI_LOG_LVL)
+#if (NUMDL_LOG_WARNING <= NUMDL_LOG_LVL)
 #define WARN(fmt, ...)                                                         \
-    os_kprintf("[WARN] [%s] " fmt "\r\n", UAI_LOG_TAG, ##__VA_ARGS__);
+    printf("[WARN] [%s] " fmt "\r\n", NUMDL_LOG_TAG, ##__VA_ARGS__);
 #else
 #define WARN(fmt, ...)
 #endif
 
-#if (UAI_LOG_INFO <= UAI_LOG_LVL)
+#if (NUMDL_LOG_INFO <= NUMDL_LOG_LVL)
 #define INFO(fmt, ...)                                                         \
-    os_kprintf("[INFO] [%s] " fmt "\r\n", UAI_LOG_TAG, ##__VA_ARGS__);
+    printf("[INFO] [%s] " fmt "\r\n", NUMDL_LOG_TAG, ##__VA_ARGS__);
 #else
 #define INFO(fmt, ...)
 #endif
 
-#if (UAI_LOG_DEBUG <= UAI_LOG_LVL)
+#if (NUMDL_LOG_DEBUG <= NUMDL_LOG_LVL)
 #define DEBUG(fmt, ...)                                                        \
-    os_kprintf("[DEBUG] [%s] " fmt "\r\n", UAI_LOG_TAG, ##__VA_ARGS__);
+    printf("[DEBUG] [%s] " fmt "\r\n", NUMDL_LOG_TAG, ##__VA_ARGS__);
 #else
 #define DEBUG(fmt, ...)
 #endif
-
-#endif /* OS_USING_DLOG */
 
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
 
-#endif /* __UAI_LOG_H__ */
+#endif /* __NUMDL_LOG_H__ */

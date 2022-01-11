@@ -14,22 +14,27 @@
  *License for the specific language governing permissions and limitations under
  *the License.
  *
- * @file        uai_utils.h
+ * @file        nd_ver.h
  *
  * @revision
  * Date         Author          Notes
- * 2021-07-14   OneOS AI Team   First Version
+ * 2021-07-14   OneOS AI Team   First version
  *******************************************************************************
  */
 
-#ifndef __UAI_UTILS_H__
-#define __UAI_UTILS_H__
+#ifndef __NUMDL_VERSION__
+#define __NUMDL_VERSION__
 
-#include <stdlib.h>
+/**
+ *******************************************************************************
+ * @def         NUMDL_VERSION
+ *
+ * @brief       Version number format is NUMDL-Vx.y.z
+ *                  - x:     Major version number.
+ *                  - y:     Minor version number.
+ *                  - z:     Revision number.
+ *******************************************************************************
+ */
+#define NUMDL_VERSION "NUMDL-V0.1.0"
 
-int uai_base64_encode(const char *input,
-                      size_t input_size,
-                      char *output,
-                      size_t output_size);
-
-#endif /* __UAI_UTILS_H__ */
+#endif /* __NUMDL_VERSION__ */

@@ -2,12 +2,9 @@ menu "numDL"
 
 config USING_NUMDL
     bool "Enable numDL"
-    select NUMDL_USING_UTILS
     default n
 
 if USING_NUMDL
-
-source "$OS_ROOT/thirdparty/numDL/common/Kconfig"
 
 source "$OS_ROOT/thirdparty/numDL/feature/Kconfig"
 

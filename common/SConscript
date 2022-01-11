@@ -5,12 +5,6 @@ pwd = PresentDir()
 path = [pwd]
 src = []
 
-if IsDefined(['NUMDL_USING_UTILS']):
-    src += Glob('uai_utils.c')
-
-if IsDefined(['NUMDL_USING_MATRIX']):
-    src += Glob('uai_matrix.c')
-
 group = AddCodeGroup('numdl', src, depend = ['USING_NUMDL'], CPPPATH = path)
 
 Return('group')

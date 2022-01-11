@@ -11,6 +11,7 @@ path = [pwd]
 src = []
 
 src += Glob('*.cc')
+src += Glob('*.c')
 
 group = AddCodeGroup('numdl', src, depend = ['NUMDL_FEATURE'], CPPPATH = path)
 

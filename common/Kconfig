@@ -1,7 +1,0 @@
-config NUMDL_USING_UTILS
-    bool
-    default n
-
-config NUMDL_USING_MATRIX
-    bool
-    default n
