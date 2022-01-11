@@ -28,7 +28,7 @@
 #include "nd_log.h"
 
 #include <os_memory.h>
-#include <os_assert.h>
+#include <nd_assert.h>
 
 /**
  * Create a matrix of size [rows x cols]
@@ -40,7 +40,7 @@
  */
 uai_mat_t* uai_mat_create(os_size_t rows, os_size_t cols)
 {
-    OS_ASSERT(rows > 0 && cols > 0);
+    NUMDL_ASSERT(rows > 0 && cols > 0);
 
     uai_mat_t* mat = (uai_mat_t*)os_calloc(1, sizeof(uai_mat_t));
     if (OS_NULL == mat) {
@@ -72,7 +72,7 @@ uai_mat_t* uai_mat_create(os_size_t rows, os_size_t cols)
  */
 void uai_mat_destroy(uai_mat_t* mat)
 {
-    OS_ASSERT(mat != OS_NULL);
+    NUMDL_ASSERT(mat != OS_NULL);
 
     if (mat->data != OS_NULL) {
         os_free(mat->data);

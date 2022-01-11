@@ -43,7 +43,7 @@
 #include <math.h>
 #include <string.h>
 
-#include <os_assert.h>
+#include <nd_assert.h>
 
 namespace uai {
 namespace feature {
@@ -58,7 +58,7 @@ namespace feature {
  */
 float dsp::sum(float* input, os_size_t size)
 {
-    OS_ASSERT(input != NULL);
+    NUMDL_ASSERT(input != NULL);
 
     float sum = 0;
 
@@ -80,12 +80,12 @@ float dsp::sum(float* input, os_size_t size)
  */
 int dsp::dot(uai_mat_t* mat1, uai_mat_t* mat2, uai_mat_t* output)
 {
-    OS_ASSERT(mat1 != OS_NULL);
-    OS_ASSERT(mat2 != OS_NULL);
-    OS_ASSERT(output != OS_NULL);
-    OS_ASSERT(mat1->cols == mat2->rows);
-    OS_ASSERT(mat1->rows == output->rows);
-    OS_ASSERT(mat2->cols == output->cols);
+    NUMDL_ASSERT(mat1 != OS_NULL);
+    NUMDL_ASSERT(mat2 != OS_NULL);
+    NUMDL_ASSERT(output != OS_NULL);
+    NUMDL_ASSERT(mat1->cols == mat2->rows);
+    NUMDL_ASSERT(mat1->rows == output->rows);
+    NUMDL_ASSERT(mat2->cols == output->cols);
 
     memset(output->data, 0, output->rows * output->cols * sizeof(float));
 
@@ -114,11 +114,11 @@ int dsp::dot_by_row(os_size_t mat1_row,
                     uai_mat_t* mat2,
                     uai_mat_t* output)
 {
-    OS_ASSERT(mat1_row_data != OS_NULL);
-    OS_ASSERT(mat2 != OS_NULL);
-    OS_ASSERT(output != OS_NULL);
-    OS_ASSERT(mat1_cols == mat2->rows);
-    OS_ASSERT(mat2->cols == output->cols);
+    NUMDL_ASSERT(mat1_row_data != OS_NULL);
+    NUMDL_ASSERT(mat2 != OS_NULL);
+    NUMDL_ASSERT(output != OS_NULL);
+    NUMDL_ASSERT(mat1_cols == mat2->rows);
+    NUMDL_ASSERT(mat2->cols == output->cols);
 
     for (os_size_t i = 0; i < mat2->cols; i++) {
         float tmp = 0.0;
@@ -145,8 +145,8 @@ int dsp::int16_to_float(const os_int16_t* input,
                         os_size_t length)
 
 {
-    OS_ASSERT(input != OS_NULL);
-    OS_ASSERT(output != OS_NULL);
+    NUMDL_ASSERT(input != OS_NULL);
+    NUMDL_ASSERT(output != OS_NULL);
 
     for (os_size_t i = 0; i < length; i++) {
         output[i] = (float)input[i] / 32768.f;
@@ -209,8 +209,8 @@ float dsp::log10(float a)
  */
 int dsp::log(uai_mat_t* matrix)
 {
-    OS_ASSERT(matrix != OS_NULL);
-    OS_ASSERT(matrix->data != OS_NULL);
+    NUMDL_ASSERT(matrix != OS_NULL);
+    NUMDL_ASSERT(matrix->data != OS_NULL);
 
     for (os_size_t i = 0; i < matrix->cols * matrix->rows; i++) {
         matrix->data[i] = dsp::log(matrix->data[i]);
@@ -227,8 +227,8 @@ int dsp::log(uai_mat_t* matrix)
  */
 int dsp::log10(uai_mat_t* matrix)
 {
-    OS_ASSERT(matrix != OS_NULL);
-    OS_ASSERT(matrix->data != OS_NULL);
+    NUMDL_ASSERT(matrix != OS_NULL);
+    NUMDL_ASSERT(matrix->data != OS_NULL);
 
     for (os_size_t i = 0; i < matrix->cols * matrix->rows; i++) {
         matrix->data[i] = dsp::log10(matrix->data[i]);
@@ -254,7 +254,7 @@ int dsp::log10(uai_mat_t* matrix)
  */
 int dsp::linspace(float start, float stop, os_size_t num, float* out)
 {
-    OS_ASSERT(out != OS_NULL);
+    NUMDL_ASSERT(out != OS_NULL);
 
     if (1 == num) {
         out[0] = start;
@@ -295,7 +295,7 @@ int dsp::linspace(os_int16_t start,
                   os_size_t num,
                   os_int16_t* out)
 {
-    OS_ASSERT(out != OS_NULL);
+    NUMDL_ASSERT(out != OS_NULL);
 
     if (1 == num) {
         out[0] = start;
@@ -336,7 +336,7 @@ int dsp::linspace(os_int32_t start,
                   os_size_t num,
                   os_int32_t* out)
 {
-    OS_ASSERT(out != OS_NULL);
+    NUMDL_ASSERT(out != OS_NULL);
 
     if (1 == num) {
         out[0] = start;
@@ -361,8 +361,8 @@ static int kiss_rfft_cpx(const float* src,
                          kiss_fft_cpx* cpx_out,
                          os_size_t fft_len)
 {
-    OS_ASSERT(src != NULL);
-    OS_ASSERT(cpx_out != OS_NULL);
+    NUMDL_ASSERT(src != NULL);
+    NUMDL_ASSERT(cpx_out != OS_NULL);
 
     kiss_fftr_cfg cfg = kiss_fftr_alloc(fft_len, 0, OS_NULL, OS_NULL);
     if (OS_NULL == cfg) {
@@ -382,8 +382,8 @@ static int kiss_rfft(const float* src,
                      os_size_t fft_len,
                      os_size_t feat_len)
 {
-    OS_ASSERT(src != OS_NULL);
-    OS_ASSERT(out != OS_NULL);
+    NUMDL_ASSERT(src != OS_NULL);
+    NUMDL_ASSERT(out != OS_NULL);
 
     kiss_fft_cpx* cpx_out =
         (kiss_fft_cpx*)malloc(feat_len * sizeof(kiss_fft_cpx));
@@ -427,8 +427,8 @@ int dsp::rfft(const float* src,
               os_size_t out_len,
               os_size_t fft_len)
 {
-    OS_ASSERT(src != OS_NULL);
-    OS_ASSERT(out != OS_NULL);
+    NUMDL_ASSERT(src != OS_NULL);
+    NUMDL_ASSERT(out != OS_NULL);
 
     os_size_t feat_len = fft_len / 2 + 1;
     if (feat_len != out_len) {
@@ -477,7 +477,7 @@ int dsp::rfft(const float* src,
  */
 static int dct2_transform(float* data, os_size_t data_len)
 {
-    OS_ASSERT(data != OS_NULL);
+    NUMDL_ASSERT(data != OS_NULL);
 
     float* fft_data_in = (float*)calloc(1, data_len * sizeof(float));
     if (fft_data_in == OS_NULL) {
@@ -521,7 +521,7 @@ static int dct2_transform(float* data, os_size_t data_len)
 
 static int dct2_by_row(float* data, os_size_t length, dct_norm_t mode)
 {
-    OS_ASSERT(data != OS_NULL);
+    NUMDL_ASSERT(data != OS_NULL);
 
     int ret = dct2_transform(data, length);
     if (ret != NUMDL_EOK) {
@@ -553,7 +553,7 @@ static int dct2_by_row(float* data, os_size_t length, dct_norm_t mode)
  */
 int dsp::dct2(uai_mat_t* mat, dct_norm_t mode)
 {
-    OS_ASSERT(mat != OS_NULL);
+    NUMDL_ASSERT(mat != OS_NULL);
 
     for (os_size_t row = 0; row < mat->rows; row++) {
         int ret = dct2_by_row(&mat->data[row * mat->cols], mat->cols, mode);

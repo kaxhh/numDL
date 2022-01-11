@@ -25,7 +25,7 @@
 
 #include <atest.h>
 
-#include <os_errno.h>
+#include <nd_errno.h>
 
 #define MAT_MAX_ROWS (10)
 #define MAT_MAX_COLS (10)
@@ -59,12 +59,12 @@ static void test_case(void)
 
 static os_err_t test_init(void)
 {
-    return OS_EOK;
+    return NUMDL_EOK;
 }
 
 static os_err_t test_cleanup(void)
 {
-    return OS_EOK;
+    return NUMDL_EOK;
 }
 
 ATEST_TC_EXPORT(uai_sdk.matrix.tc,
