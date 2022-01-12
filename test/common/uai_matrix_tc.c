@@ -53,7 +53,7 @@ static void test_mat_create_and_destory(void)
 
 static void test_case(void)
 {
-    ATEST_UNIT_RUN(test_mat_create_and_destory);
+    //ATEST_UNIT_RUN(test_mat_create_and_destory);
     return;
 }
 

@@ -35,6 +35,7 @@
 #include <os_clock.h>
 #include <os_stddef.h>
 #include <os_memory.h>
+#include "constants.h"
 
 #define REL_ERROR (1.0e-3)
 
@@ -55,6 +56,10 @@ static void test_sum(void)
     float execpt_sum = 10.5;
 
     float array_sum = dsp::sum(test_array, OS_ARRAY_SIZE(test_array));
+    printf("------------------%lf--------\r\n",nd::constants::pi);
+    printf("------------------%f--------\r\n",nd::constants::pi);
+    printf("------------------%d--------\r\n",nd::constants::HOURS_PER_DAY);
+    printf("--------------------------\r\n");
     tp_assert_in_range(
         array_sum, execpt_sum - REL_ERROR, execpt_sum + REL_ERROR);
 }
@@ -312,6 +317,7 @@ static void test_rfft_function(void)
 static void test_case(void)
 {
     ATEST_UNIT_RUN(test_sum);
+#if 0
     ATEST_UNIT_RUN(test_mat_dot);
     ATEST_UNIT_RUN(test_int16_to_float);
     ATEST_UNIT_RUN(test_log_function);
@@ -320,6 +326,7 @@ static void test_case(void)
     ATEST_UNIT_RUN(test_log_mat_function);
     ATEST_UNIT_RUN(test_linspace);
     ATEST_UNIT_RUN(test_rfft_function);
+#endif
     return;
 }
 
