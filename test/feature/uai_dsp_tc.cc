@@ -35,7 +35,7 @@
 #include <os_clock.h>
 #include <os_stddef.h>
 #include <os_memory.h>
-#include "constants.h"
+#include "numdl.h"
 
 #define REL_ERROR (1.0e-3)
 
@@ -43,6 +43,8 @@
 #define CONSTANT_E_2 (7.3890560989306502274)
 #define CONSTANT_E_3 (20.0855369231876677418)
 #define CONSTANT_E_4 (54.5981500331442390813)
+
+using namespace nd;
 
 namespace uai {
 namespace feature {
@@ -54,11 +56,15 @@ static void test_sum(void)
 {
     float test_array[10] = {0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0};
     float execpt_sum = 10.5;
+    int sum=10;
+    
+    sum = utils::cube(sum);
+    execpt_sum = utils::cube(execpt_sum);
 
     float array_sum = dsp::sum(test_array, OS_ARRAY_SIZE(test_array));
-    printf("------------------%lf--------\r\n",nd::constants::pi);
-    printf("------------------%f--------\r\n",nd::constants::pi);
-    printf("------------------%d--------\r\n",nd::constants::HOURS_PER_DAY);
+    printf("------------------%lf--------\r\n",constants::pi);
+    printf("------------------%f--------\r\n",execpt_sum);
+    printf("------------------%d--------\r\n",sum);
     printf("--------------------------\r\n");
     tp_assert_in_range(
         array_sum, execpt_sum - REL_ERROR, execpt_sum + REL_ERROR);
