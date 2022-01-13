@@ -8,10 +8,10 @@ if not IsDefined(['NUMDL_CANDY']):
 pwd = PresentDir()
 path  = [pwd]
 
-list = os.listdir(pwd)
-for item in list:
-    if os.path.isdir(os.path.join(pwd, item)):
-        path.append(os.path.join(pwd, item))
+#list = os.listdir(pwd)
+#for item in list:
+#    if os.path.isdir(os.path.join(pwd, item)):
+#        path.append(os.path.join(pwd, item))
 
 src = []
 src += Glob('*.cc')
