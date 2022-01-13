@@ -35,6 +35,11 @@
 #include "core/constants.h"
 #include "utils/cube.h"
 
+#ifdef NUMDL_USING_NAMESPACE
+
+using namespace nd::constants;
+using namespace nd::utils;
+#endif
 
 
 

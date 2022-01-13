@@ -44,7 +44,6 @@
 #define CONSTANT_E_3 (20.0855369231876677418)
 #define CONSTANT_E_4 (54.5981500331442390813)
 
-using namespace nd;
 
 namespace uai {
 namespace feature {
@@ -56,13 +55,13 @@ static void test_sum(void)
 {
     float test_array[10] = {0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0};
     float execpt_sum = 10.5;
-    int sum=10;
+    int sum=1000;
     
-    sum = utils::cube(sum);
-    execpt_sum = utils::cube(execpt_sum);
+    sum = cube(sum);
+    execpt_sum = cube(execpt_sum);
 
     float array_sum = dsp::sum(test_array, OS_ARRAY_SIZE(test_array));
-    printf("------------------%lf--------\r\n",constants::pi);
+    printf("------------------%lf--------\r\n",pi);
     printf("------------------%f--------\r\n",execpt_sum);
     printf("------------------%d--------\r\n",sum);
     printf("--------------------------\r\n");

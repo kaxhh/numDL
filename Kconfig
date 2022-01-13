@@ -2,6 +2,7 @@ menu "numDL"
 
 config USING_NUMDL
     bool "Enable numDL"
+    select NUMDL_CANDY
     default n
 
 if USING_NUMDL

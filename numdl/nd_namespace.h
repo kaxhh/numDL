@@ -29,30 +29,23 @@
  * 2022-01-12   OneOS AI Team   First Version
  *******************************************************************************
  */
-#ifndef __NUMDL_CUBE_H__
-#define __NUMDL_CUBE_H__
+#ifndef __NUMDL_H__
+#define __NUMDL_H__
 
-#include "nd_assert.h"
-namespace nd
-{
-    namespace utils
-    {
-        //============================================================================
-        ///						Cubes in input value
-        ///
-        /// @param      inValue
-        ///
-        /// @return     cubed value
-        ///
+#include "core/constants.h"
+#include "utils/cube.h"
 
-        template<typename dtype>
-        const dtype cube(dtype inValue) noexcept
-        {
-            NUMDL_ASSERT(inValue > 0);
-            return inValue * inValue * inValue;
-        }
 
-    }  // namespace utils
-}  // namespace nd
+
+
+
+
+
+
+
+
+
+
+
 
 #endif

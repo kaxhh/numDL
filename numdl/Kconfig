@@ -4,4 +4,39 @@ config NUMDL_CANDY
     bool "Enable numDL Magic Candy"
     default n
 
+if NUMDL_CANDY
+
+    config NUMDL_USING_NAMESPACE
+        bool "Auto enable numDL using namespace"
+
+    config NUMDL_USING_ASSERT
+        bool "Enable numDL assert check"
+        default n
+
+    choice
+        prompt "numDL log level"
+        default NUMDL_LOG_LVL_6
+
+        config NUMDL_LOG_LVL_3
+            bool "error"
+
+        config NUMDL_LOG_LVL_4
+            bool "warning"
+
+        config NUMDL_LOG_LVL_6
+            bool "information"
+
+        config NUMDL_LOG_LVL_7
+            bool "debug"
+    endchoice
+    config NUMDL_LOG_LVL
+        int
+        default 3  if NUMDL_LOG_LVL_3
+        default 4  if NUMDL_LOG_LVL_4
+        default 6 if NUMDL_LOG_LVL_6
+        default 7 if NUMDL_LOG_LVL_7
+
+
+
+endif
 endmenu
