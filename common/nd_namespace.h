@@ -29,16 +29,11 @@
  * 2022-01-12   OneOS AI Team   First Version
  *******************************************************************************
  */
-#ifndef __NUMDL_H__
-#define __NUMDL_H__
+#ifndef __NUMDL_NAMESPACE_H__
+#define __NUMDL_NAMESPACE_H__
 
-#include "core/constants.h"
-#include "utils/cube.h"
-
-
-
-
-
+using namespace nd::constants;
+using namespace nd::utils;
 
 
 
