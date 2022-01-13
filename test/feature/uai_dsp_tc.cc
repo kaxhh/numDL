@@ -57,11 +57,11 @@ static void test_sum(void)
     float execpt_sum = 10.5;
     int sum=1000;
     
-    sum = cube(sum);
-    execpt_sum = cube(execpt_sum);
+    sum = nd::utils::cube(sum);
+    execpt_sum = nd::utils::cube(execpt_sum);
 
     float array_sum = dsp::sum(test_array, OS_ARRAY_SIZE(test_array));
-    printf("------------------%lf--------\r\n",pi);
+    printf("------------------%lf--------\r\n",nd::constants::pi);
     printf("------------------%f--------\r\n",execpt_sum);
     printf("------------------%d--------\r\n",sum);
     printf("--------------------------\r\n");

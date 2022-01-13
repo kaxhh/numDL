@@ -6,9 +6,6 @@ config NUMDL_CANDY
 
 if NUMDL_CANDY
 
-    config NUMDL_USING_NAMESPACE
-        bool "Auto enable numDL using namespace"
-
     config NUMDL_USING_ASSERT
         bool "Enable numDL assert check"
         default n
